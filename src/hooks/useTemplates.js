@@ -1,24 +1,22 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { getUserDetail } from "../api";
+import { getTemplates } from "../api";
 import { toast } from "react-toastify";
 
-const useUser = () => {
+const useTemplates = () => {
   const { data, isLoading, isError, refetch } = useQuery(
-    "user",
+    "templates",
     async () => {
       try {
-        const userDetail = await getUserDetail();
-        return userDetail;
+        const templates = await getTemplates();
+        return templates;
       } catch (error) {
-        if (!error.message.includes("not authenticated")) {
-          toast.error("Something went wrong...");
-        }
+        console.log(error.message);
+        toast.error("Something went wrong...");
       }
     },
     { refetchOnWindowFocus: false }
   );
-
   return {
     data,
     isLoading,
@@ -27,4 +25,4 @@ const useUser = () => {
   };
 };
 
-export default useUser;
+export default useTemplates;

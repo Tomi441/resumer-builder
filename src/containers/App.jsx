@@ -1,29 +1,27 @@
-import React, { Suspense } from 'react';
-import {Route, Routes} from "react-router-dom";
-import {HomeScreen, Authentication} from "../pages";
-
-import{ QueryClient, QueryClientProvider } from "react-query";
+import React, { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Authentication, Home } from "../pages";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-
-// home, auth
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { MainSpinner } from "../components";
 
 const App = () => {
- const queryClient = new QueryClient()
- return (
-    <QueryClientProvider client={queryClient}>    
-      <Suspense fallback = {<div>Loading...</div>}>
+  const queryClient = new QueryClient();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={<MainSpinner />}>
         <Routes>
-            <Route path="/*" element={<HomeScreen/>}/>
-            <Route path="/auth" element={<Authentication/>}/>
+          <Route path="/*" element={<Home />} />
+          <Route path="/auth" element={<Authentication />} />
         </Routes>
-    </Suspense>    
-    <ToastContainer position="top-right" theme="dark"/>
-    <ReactQueryDevtools initialIsOpen={false} />
+      </Suspense>
+      <ToastContainer position="top-right" theme="dark" />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-    );
+  );
 };
 
 export default App;
