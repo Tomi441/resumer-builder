@@ -27,12 +27,12 @@ const Authentication = () => {
       {/* main */}
       <div className="w-full flex flex-1 flex-col items-center justify-center gap-6">
         <p className="text-3xl lg:text-4xl text-blue-700">
-          Welcome to Easy Res
+          Welcome to Expressume
         </p>
         <p className="text-base text-txtPrimary">
           express way to create resume
         </p>
-        <p className="text-2xl text-gray-600">Login</p>
+        <p className="text-2xl text-gray-600">Authenticate</p>
 
         <div className="w-full lg:w-96 p-4 rounded-md flex flex-col items-center justify-start gap-6">
           <AuthButtonWithProvider
