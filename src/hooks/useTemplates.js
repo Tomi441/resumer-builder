@@ -12,7 +12,7 @@ const useTemplates = () => {
         return templates;
       } catch (error) {
         console.log(error.message);
-        toast.error("Something went wrong...");
+        toast.error('Something went wrong...');
       }
     },
     { refetchOnWindowFocus: false }

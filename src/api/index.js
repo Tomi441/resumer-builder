@@ -43,7 +43,7 @@ export const getUserDetail = () => {
 export const getTemplates = () => {
   return new Promise((resolve, reject) => {
     const templateQuery = query(
-      collection(db, "templates"),
+      collection(db , "templates"),
       orderBy("timeStamp", "asc")
     );
 
