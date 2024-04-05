@@ -30,7 +30,7 @@ const Authentication = () => {
           Welcome to Easy Res
         </p>
         <p className="text-base text-txtPrimary">
-          express way to create resume
+          An express way to create resumes
         </p>
         <p className="text-2xl text-gray-600">Login</p>
 
