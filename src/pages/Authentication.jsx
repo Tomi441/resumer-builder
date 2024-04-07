@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Logo } from "../assets";
-import { FaChevronRight, FaGithub, FaGoogle } from "react-icons/fa6";
+import { FaChevronRight, FaGithub, FaGoogle, FaEnvelope } from "react-icons/fa6";
 import { Footer } from "../containers";
 import { AuthButtonWithProvider, MainSpinner } from "../components";
 import useUser from "../hooks/useUser";
@@ -46,6 +46,12 @@ const Authentication = () => {
             label={"Signin with GitHub"}
             provider={"GitHubAuthProvider"}
           />
+
+         // AuthButtonWithProvider
+            //Icon={FaEnvelope}
+            //label={"Signin with Email"}
+            //provider={""}
+          
         </div>
       </div>
       {/* footer */}
