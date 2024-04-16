@@ -464,7 +464,7 @@ const Template3 = () => {
           className="text-txtPrimary cursor-pointer"
           onClick={() => navigate(-1)}
         >
-          / Template1 /
+          / Template3 /
         </p>
         <p>Edit</p>
       </div>

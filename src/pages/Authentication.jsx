@@ -47,10 +47,7 @@ const Authentication = () => {
             provider={"GitHubAuthProvider"}
           />
 
-         // AuthButtonWithProvider
-            //Icon={FaEnvelope}
-            //label={"Signin with Email"}
-            //provider={""}
+       
           
         </div>
       </div>
