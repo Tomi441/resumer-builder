@@ -24,6 +24,7 @@ const Template1 = () => {
   const templateName = pathname?.split("/")?.slice(-1)[0];
   const { data: user } = useUser();
   const resumeRef = useRef(null);
+  const loadedTemplateId = resumeData?._id || 'defaultTemplateId';
 
   // State for managing edit mode
   const [isEdit, setIsEdit] = useState(false);
@@ -298,6 +299,31 @@ const removeEducation = (index) => {
   setEducation(updatedEducation);
 };
 
+const handleReferenceChange = (index, e) => {
+  const updatedReferences = [...formData.references];
+  updatedReferences[index] = {
+    ...updatedReferences[index],
+    [e.target.name]: e.target.value
+  };
+  setFormData({...formData, references: updatedReferences});
+};
+
+const deleteImageObject = () => {
+  setImageAsset(prev => ({ ...prev, imageURL: null }));
+  toast.info('Image removed successfully');
+};
+
+
+const addReference = () => {
+  const newReference = { name: '', role: '', contact: '' };
+  setFormData(prev => ({ ...prev, references: [...prev.references, newReference] }));
+};
+
+const removeReference = (index) => {
+  const filteredReferences = formData.references.filter((_, i) => i !== index);
+  setFormData({...formData, references: filteredReferences});
+};
+
 
 const saveFormData = async () => {
   const timeStamp = serverTimestamp();
@@ -347,22 +373,20 @@ const generatePDF = async () => {
       format: 'a4'
     });
     
-     const getImage = async () => {
-        const element = resumeRef.current;
-        if (!element) {
-            console.error("DOM element is not accessible");
-            return null;
-        }
-        try {
-            const dataUrl = await htmlToImage.toPng(element);
-            return dataUrl;
-        } catch (error) {
-            console.error("Failed to convert image:", error);
-            return null;
-        }
+    const getImage = async () => {
+      if (!resumeRef.current) {
+        console.error("DOM element is not accessible");
+        return null;
+      }
+      try {
+        return await htmlToImage.toPng(resumeRef.current);
+      } catch (error) {
+        console.error("Failed to convert image:", error);
+        return null;
+      }
     };
+    
 
-    const loadedTemplateId = resumeData?._id || 'defaultTemplateId'; // Adjust according to your data handling
 
     const deleteImageObject = () => {
         setImageAsset({ ...imageAsset, imageURL: null });
@@ -788,8 +812,7 @@ return (
       {/* You can add other download buttons here for different formats like PNG, JPEG, etc. */}
     </div>
   </main>
-</div>
-  );
+
 };
 
 export default Template1;
