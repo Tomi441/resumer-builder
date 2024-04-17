@@ -352,7 +352,18 @@ const saveFormData = async () => {
     toast.error(`Error saving data: ${error.message}`);
   }
 };
-
+const getImage = async () => {
+  if (!resumeRef.current) {
+    console.error("DOM element is not accessible");
+    return null;
+  }
+  try {
+    return await htmlToImage.toPng(resumeRef.current);
+  } catch (error) {
+    console.error("Failed to convert image:", error);
+    return null;
+  }
+};
 const generatePDF = async () => {
   // Ensure the element exists
   const element = resumeRef.current;
@@ -372,19 +383,7 @@ const generatePDF = async () => {
       unit: 'mm',
       format: 'a4'
     });
-    
-    const getImage = async () => {
-      if (!resumeRef.current) {
-        console.error("DOM element is not accessible");
-        return null;
-      }
-      try {
-        return await htmlToImage.toPng(resumeRef.current);
-      } catch (error) {
-        console.error("Failed to convert image:", error);
-        return null;
-      }
-    };
+  
     
 
 
