@@ -36,10 +36,6 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { PuffLoader } from "react-spinners";
-import { FaPhone, FaEnvelope, FaGlobe, FaMapMarkerAlt, FaLanguage, FaChessKnight } from 'react-icons/fa';
-import { IoIosPeople } from 'react-icons/io';
-import { GiChessKnight } from 'react-icons/gi';
-
 
 const Template2 = () => {
   const { pathname } = useLocation();
@@ -70,12 +66,16 @@ const Template2 = () => {
   );
 
   const [formData, setFormData] = useState({
-    fullname: 'Noel Taylor',
-    professionalTitle: 'Graphic & Web Designer',
-    personalDescription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry...',
-    // ... other existing form fields
+    fullname: "Karen Richards",
+    professionalTitle: "Professional Title",
+    personalDescription: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?`,
+    refererName: "Sara Taylore",
+    refererRole: "Director | Company Name",
+    mobile: "+91 0000-0000",
+    email: "urname@gmail.com",
+    website: "urwebsite.com",
+    address: "your street address, ss, street, city/zip code - 1234",
   });
-  
 
   const [experiences, setExperiences] = useState([
     {
@@ -102,14 +102,27 @@ const Template2 = () => {
   ]);
 
   const [skills, setSkills] = useState([
-    { skill: 'Adobe Photoshop', level: 90 },
-    { skill: 'Adobe Illustrator', level: 85 },
-    { skill: 'Microsoft Word', level: 80 },
-    { skill: 'Microsoft Powerpoint', level: 75 },
-    { skill: 'HTML/CSS/JS', level: 95 }
-    // ... add more if needed
+    {
+      title: "skill1",
+      percentage: "75",
+    },
+    {
+      title: "skill2",
+      percentage: "75",
+    },
+    {
+      title: "skill3",
+      percentage: "75",
+    },
+    {
+      title: "skill4",
+      percentage: "75",
+    },
+    {
+      title: "skill5",
+      percentage: "75",
+    },
   ]);
-  
 
   const [education, setEducation] = useState([
     {
@@ -117,33 +130,6 @@ const Template2 = () => {
       university: "Name of your university / college 2005-2009",
     },
   ]);
-
-  const [languages, setLanguages] = useState([
-    'English', 'Spanish', 'French', 'German'
-    // ... add more if needed
-  ]);
-  
-  const [hobbies, setHobbies] = useState([
-    'Reading Books', 'Traveling', 'Playing Chess'
-    // ... add more if needed
-  ]);
-  
-  
-const [references, setReferences] = useState([
-  {
-    name: 'Darwin B. Magana',
-    contact: '2813 Shobe Lane Mancos, CO',
-    phone: '+1-970-533-3393',
-    email: 'contact@website.com'
-  },
-  {
-    name: 'Robert J. Blevin',
-    contact: '2119 Fairfax Drive Newark, NJ',
-    phone: '+1-908-987-5103',
-    email: 'contact@website.com'
-  }
-  // ... add more if needed
-]);
 
   useEffect(() => {
     if (resumeData?.formData) {
@@ -157,15 +143,6 @@ const [references, setReferences] = useState([
     }
     if (resumeData?.education) {
       setEducation(resumeData?.education);
-    }
-    if (resumeData?.references) {
-      setReferences(resumeData?.references);
-    }
-    if (resumeData?.languages) {
-      setLanguages(resumeData?.languages);
-    }
-    if (resumeData?.hobbies) {
-      setHobbies(resumeData?.hobbies);
     }
     if (resumeData?.userProfilePic) {
       setImageAsset((prevAsset) => ({
@@ -320,64 +297,6 @@ const [references, setReferences] = useState([
     setEducation(updatedEdu);
   };
 
-  const handleLanguageChange = (index, newLanguage) => {
-    const updatedLanguages = [...languages];
-    updatedLanguages[index] = newLanguage;
-    setLanguages(updatedLanguages);
-  };
-  
-  // Handler to remove a language
-  const removeLanguage = (index) => {
-    const updatedLanguages = [...languages];
-    updatedLanguages.splice(index, 1);
-    setLanguages(updatedLanguages);
-  };
-  
-  // Handler to add a new language
-  const addLanguage = () => {
-    setLanguages([...languages, '']);
-  };
-  
-  // Handler to update hobbies
-  const handleHobbyChange = (index, newHobby) => {
-    const updatedHobbies = [...hobbies];
-    updatedHobbies[index] = newHobby;
-    setHobbies(updatedHobbies);
-  };
-  
-  // Handler to remove a hobby
-  const removeHobby = (index) => {
-    const updatedHobbies = [...hobbies];
-    updatedHobbies.splice(index, 1);
-    setHobbies(updatedHobbies);
-  };
-  
-  // Handler to add a new hobby
-  const addHobby = () => {
-    setHobbies([...hobbies, '']);
-  };
-  
-  // Handler to update reference details
-  const handleReferenceChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedReferences = [...references];
-    updatedReferences[index][name] = value;
-    setReferences(updatedReferences);
-  };
-  
-  // Handler to remove a reference
-  const removeReference = (index) => {
-    const updatedReferences = [...references];
-    updatedReferences.splice(index, 1);
-    setReferences(updatedReferences);
-  };
-  
-  // Handler to add a new reference
-  const addReference = () => {
-    setReferences([...references, { name: '', contact: '', phone: '', email: '' }]);
-  };
-  
-
   const saveFormData = async () => {
     const timeStamp = serverTimestamp();
     const resume_id = `${templateName}-${user?.uid}`;
@@ -389,9 +308,6 @@ const [references, setReferences] = useState([
       education,
       experiences,
       skills,
-      references,
-      languages,
-      hobbies,
       timeStamp,
       userProfilePic: imageAsset.imageURL,
       imageURL,
@@ -598,8 +514,8 @@ const [references, setReferences] = useState([
             </div>
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-            <div className="col-span-4 bg-black flex flex-col items-center justify-start">
-              <div className="w-full h-80 bg-gray-300 flex items-center justify-center">
+          <div className="col-span-4 bg-teal-500 pt-2">
+              <div className="w-full h-80 flex items-center justify-center">
                 {!imageAsset.imageURL ? (
                   <React.Fragment>
                     <label className=" w-full cursor-pointer h-full">
@@ -624,7 +540,7 @@ const [references, setReferences] = useState([
                     </label>
                   </React.Fragment>
                 ) : (
-                  <div className="relative w-full h-full overflow-hidden rounded-md">
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden">
                     <img
                       src={imageAsset.imageURL}
                       alt="uploaded image"
@@ -643,97 +559,435 @@ const [references, setReferences] = useState([
                   </div>
                 )}
               </div>
-              <div className="w-full flex flex-col lg:flex-row justify-center lg:items-start bg-white shadow-md">
-        {/* Left Column with teal background */}
-        <div className="w-full lg:w-1/3 bg-teal-500 text-white p-4">
-          {/*  Contact, and Education sections */}
-          
+              {/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+              <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
+                <div className="w-full">
+                  <p className="uppercase text-lg font-semibold text-gray-100">
+                    Education
+                  </p>
+                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
+                  <AnimatePresence>
+                    {education &&
+                      education?.map((edu, i) => (
+                        <motion.div
+                          key={i}
+                          {...opacityINOut(i)}
+                          className="w-full pl-4 mt-3 relative"
+                        >
+                          <input
+                            type="text"
+                            readOnly="true"
+                            name="major"
+                            value={edu.major}
+                            onChange={(e) => handleEducationChange(i, e)}
+                            className={`bg-transparent outline-none border-none text-sm font-semibold uppercase  text-gray-100  ${
+                              isEdit && "text-yellow-400 w-full"
+                            }`}
+                          />
 
-          {/* Contact Section */}
-          <div className="mt-4">
-            <FaPhone />
-            <span>{formData.phone}</span>
-          </div>
+                          <textarea
+                            readOnly="true"
+                            className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
+                              isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                            }`}
+                            name="university"
+                            value={edu.university}
+                            onChange={(e) => handleEducationChange(i, e)}
+                            rows="2"
+                            style={{
+                              maxHeight: "auto",
+                              minHeight: "40px",
+                              resize: "none",
+                            }}
+                          />
+                          <AnimatePresence>
+                            {isEdit && (
+                              <motion.div
+                                {...FadeInOutWithOpacityAlone}
+                                onClick={() => removeEducation(i)}
+                                className="cursor-pointer absolute right-2 top-0"
+                              >
+                                <FaTrash className="text-sm text-gray-100" />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      ))}
+                  </AnimatePresence>
+                </div>
 
-          <div>
-            <FaEnvelope />
-            <span>{formData.email}</span>
-          </div>
+                <AnimatePresence>
+                  {isEdit && (
+                    <motion.div
+                      {...FadeInOutWithOpacityAlone}
+                      onClick={addEducation}
+                      className="cursor-pointer"
+                    >
+                      <FaPlus className="text-base text-gray-100" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-          <div>
-            <FaGlobe />
-            <span>{formData.website}</span>
-          </div>
+                {/* reference */}
+                <div className="w-full">
+                  <p className="uppercase text-lg font-semibold text-gray-100">
+                    Reference
+                  </p>
+                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
+                  <div className="w-full pl-4 mt-3">
+                    <input
+                      value={formData.refererName}
+                      onChange={handleChange}
+                      name="refererName"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
 
-          <div>
-            <FaMapMarkerAlt />
-            <span>{formData.address}</span>
-          </div>
+                    <input
+                      value={formData.refererRole}
+                      onChange={handleChange}
+                      name="refererRole"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
 
-          {/* Education Section */}
-<div className="mt-4 space-y-3">
-  <h3 className="text-lg font-bold text-white">Education</h3>
-  {education.map((edu, index) => (
-    <div key={index} className="bg-white p-2 rounded shadow space-y-1">
-      <div className="text-teal-800 font-semibold">{edu.degree}</div>
-      <div className="text-sm text-teal-600">{edu.field}</div>
-      <div className="text-xs">{edu.school}</div>
-      <div className="text-xs">{edu.year}</div>
-    </div>
-  ))}
-</div>
+              <div className="w-full flex flex-col items-start justify-start mt-6 gap-6">
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Phone
+                      </p>
+                    </div>
+                    <input
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      name="mobile"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
 
+                {/* email */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Email
+                      </p>
+                    </div>
+                    <input
+                      value={formData.email}
+                      onChange={handleChange}
+                      name="email"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
 
-          {/* References Section */}
-          <div className="mt-4">
-            {/* Map through references state and display */}
-          </div>
-        </div>
+                {/* website */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Website
+                      </p>
+                    </div>
 
-        {/* Right Column with white background */}
-        <div className="w-full lg:w-2/3 bg-white p-4">
-          {/* About, Experience, and Skills sections */}
-          {/* About Me Section */}
-          <div className="mt-4">
-            <h2 className="text-xl font-bold">ABOUT ME</h2>
-            <p>{formData.personalDescription}</p>
-          </div>
+                    <input
+                      value={formData.website}
+                      onChange={handleChange}
+                      name="website"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
 
-          {/* Experience Section */}
-          <div className="mt-4">
-            {/* Map through experiences state and display */}
-          </div>
+                {/* address */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Address
+                      </p>
+                    </div>
 
-          {/* Skills Section */}
-          <div className="mt-4">
-            {/* Map through skills state and display */}
-          </div>
-
-          {/* Languages and Hobbies Section */}
-          <div className="flex mt-4">
-            <div>
-              <FaLanguage />
-              <ul>
-                {/* Map through languages state and display */}
-              </ul>
+                    <textarea
+                      readOnly="true"
+                      className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
+                        isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                      }`}
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      rows="2"
+                      style={{
+                        maxHeight: "auto",
+                        minHeight: "40px",
+                        resize: "none",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div>
-              
-              <ul>
-                {/* Map through hobbies state and display */}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+            <div className="col-span-8 flex flex-col items-center justify-start py-6 bg-white">
+              <div className="w-full py-6"></div>
+              {/* title */}
+              <div className="w-full px-8 py-6 bg-yellow-500">
+                <div className="flex items-center justify-start ">
+                  <input
+                    type="text"
+                    readOnly="true"
+                    name="fullname"
+                    value={formData.fullname}
+                    onChange={handleChange}
+                    className={`bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
+                      isEdit && "text-white w-full"
+                    }`}
+                  />
+                </div>
 
-      {/* Footer section for additional controls if necessary */}
-    </div>
-  
-              
-                  
-              
-            
+                <input
+                  value={formData.professionalTitle}
+                  onChange={handleChange}
+                  name="professionalTitle"
+                  type="text"
+                  readOnly="true"
+                  className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
+                    isEdit && "text-white"
+                  }`}
+                />
+              </div>
+
+              {/* about me */}
+              <div className="w-full px-8 py-6 flex flex-col items-start justify-start gap-6">
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">About Me</p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <textarea
+                    readOnly="true"
+                    className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                      isEdit ? "bg-gray-200" : "bg-transparent"
+                    }`}
+                    name="personalDescription"
+                    value={formData.personalDescription}
+                    onChange={handleChange}
+                    rows="4"
+                    style={{
+                      minHeight: "100px",
+                      width: "100%",
+                      height: "100px",
+                      resize: "none",
+                    }}
+                  />
+                </div>
+
+                {/* experience */}
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">
+                    Work Experience
+                  </p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <div className="w-full flex flex-col items-center justify-start gap-4">
+                    <AnimatePresence>
+                      {experiences &&
+                        experiences?.map((exp, i) => (
+                          <motion.div
+                            {...opacityINOut(i)}
+                            className="w-full grid grid-cols-12"
+                            key={i}
+                          >
+                            <div className="col-span-4">
+                              <input
+                                value={exp.year}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="year"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+                            </div>
+                            <div className="col-span-8 relative">
+                              <AnimatePresence>
+                                {isEdit && (
+                                  <motion.div
+                                    {...FadeInOutWithOpacityAlone}
+                                    onClick={() => removeExperience(i)}
+                                    className="cursor-pointer absolute right-0 top-2"
+                                  >
+                                    <FaTrash className="text-base text-txtPrimary" />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              <input
+                                value={exp.title}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="title"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+
+                              <input
+                                value={exp.companyAndLocation}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="companyAndLocation"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+
+                              <textarea
+                                readOnly="true"
+                                className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                                name="description"
+                                value={exp.description}
+                                onChange={(e) => handleExpChange(i, e)}
+                                rows="3"
+                                style={{
+                                  maxHeight: "auto",
+                                  minHeight: "60px",
+                                  resize: "none",
+                                }}
+                              />
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                      {isEdit && (
+                        <motion.div
+                          {...FadeInOutWithOpacityAlone}
+                          onClick={addExperience}
+                          className="cursor-pointer"
+                        >
+                          <FaPlus className="text-base text-txtPrimary" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* skills */}
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">Skills</p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <div className="w-full flex flex-wrap items-center justify-start gap-4">
+                    <AnimatePresence>
+                      {skills &&
+                        skills?.map((skill, i) => (
+                          <motion.div
+                            key={i}
+                            {...opacityINOut(i)}
+                            className="flex-1"
+                            style={{ minWidth: 225 }}
+                          >
+                            <div className="w-full flex items-center justify-between">
+                              <div className="flex items-center justify-center">
+                                <input
+                                  value={skill.title}
+                                  onChange={(e) => handleSkillsChange(i, e)}
+                                  name="title"
+                                  type="text"
+                                  readOnly="true"
+                                  className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                    isEdit ? "bg-gray-200" : "bg-transparent"
+                                  }`}
+                                />
+
+                                <AnimatePresence>
+                                  {isEdit && (
+                                    <motion.input
+                                      {...FadeInOutWithOpacityAlone}
+                                      value={skill.percentage}
+                                      onChange={(e) => handleSkillsChange(i, e)}
+                                      name="percentage"
+                                      type="text"
+                                      className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                        isEdit
+                                          ? "bg-gray-200"
+                                          : "bg-transparent"
+                                      }`}
+                                    />
+                                  )}
+                                </AnimatePresence>
+                              </div>
+
+                              <AnimatePresence>
+                                {isEdit && (
+                                  <motion.div
+                                    {...FadeInOutWithOpacityAlone}
+                                    onClick={() => removeSkill(i)}
+                                    className="cursor-pointer "
+                                  >
+                                    <FaTrash className="text-base text-txtPrimary" />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                            <div className="relative mt-2 w-full h-1 rounded-md bg-gray-400">
+                              <div
+                                className="h-full rounded-md bg-gray-600"
+                                style={{
+                                  width: `${skill.percentage}%`,
+                                  transition: "width 0.3s ease",
+                                }}
+                              ></div>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+                  <AnimatePresence>
+                    {isEdit && (
+                      <div className="w-full  flex items-center justify-center py-4">
+                        <motion.div
+                          {...FadeInOutWithOpacityAlone}
+                          onClick={addSkill}
+                          className="cursor-pointer"
+                        >
+                          <FaPlus className="text-base text-txtPrimary" />
+                        </motion.div>
+                      </div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -514,8 +514,8 @@ const Template1 = () => {
             </div>
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-            <div className="col-span-4 bg-black flex flex-col items-center justify-start">
-              <div className="w-full h-80 bg-gray-300 flex items-center justify-center">
+          <div className="col-span-4 bg-black pt-2">
+              <div className="w-full h-80 flex items-center justify-center">
                 {!imageAsset.imageURL ? (
                   <React.Fragment>
                     <label className=" w-full cursor-pointer h-full">
