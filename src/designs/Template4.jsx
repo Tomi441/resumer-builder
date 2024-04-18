@@ -515,50 +515,8 @@ const Template4 = () => {
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
             <div className="col-span-4 bg-black flex flex-col items-center justify-start">
-              <div className="w-full h-80 bg-gray-300 flex items-center justify-center">
-                {!imageAsset.imageURL ? (
-                  <React.Fragment>
-                    <label className=" w-full cursor-pointer h-full">
-                      <div className="w-full flex flex-col items-center justify-center h-full">
-                        <div className="w-full flex flex-col justify-center items-center cursor-pointer">
-                          <img
-                            src={TemplateOne}
-                            className="w-full h-80 object-cover"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-
-                      {isEdit && (
-                        <input
-                          type="file"
-                          className="w-0 h-0"
-                          accept=".jpeg,.jpg,.png"
-                          onChange={handleFileSelect}
-                        />
-                      )}
-                    </label>
-                  </React.Fragment>
-                ) : (
-                  <div className="relative w-full h-full overflow-hidden rounded-md">
-                    <img
-                      src={imageAsset.imageURL}
-                      alt="uploaded image"
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-
-                    {isEdit && (
-                      <div
-                        className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500 cursor-pointer"
-                        onClick={deleteImageObject}
-                      >
-                        <FaTrash className="text-sm text-white" />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+              
+{/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
 
               <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
                 <div className="w-full">

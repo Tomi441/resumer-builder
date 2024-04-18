@@ -607,7 +607,7 @@ const [references, setReferences] = useState([
                         <div className="w-full flex flex-col justify-center items-center cursor-pointer">
                           <img
                             src={TemplateOne}
-                            className="w-full h-80 object-cover"
+                            className="rounded-full w-32 h-32 object-cover"
                             alt=""
                           />
                         </div>

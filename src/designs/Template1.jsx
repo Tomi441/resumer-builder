@@ -1,8 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
+import { TemplateOne } from "../assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaFilePdf, FaHouse, FaPenToSquare, FaPencil, FaPlus, FaTrash } from "react-icons/fa";
+import {
+  FaFilePdf,
+  FaHouse,
+  FaPenToSquare,
+  FaPencil,
+  FaPlus,
+  FaTrash,
+} from "react-icons/fa6";
+
 import { BiSolidBookmarks } from "react-icons/bi";
-import { BsFiletypeJpg, BsFiletypePdf, BsFiletypePng, BsFiletypeSvg } from "react-icons/bs";
+import {
+  BsFiletypeJpg,
+  BsFiletypePdf,
+  BsFiletypePng,
+  BsFiletypeSvg,
+} from "react-icons/bs";
 import { useQuery } from "react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { FadeInOutWithOpacityAlone, opacityINOut } from "../animations";
@@ -13,85 +27,35 @@ import { db, storage } from "../config/firebase.config";
 import { getTemplateDetailEditByUser } from "../api";
 import MainSpinner from "../components/MainSpinner";
 import jsPDF from "jspdf";
-import * as htmlToImage from "html-to-image";
-import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { PuffLoader } from "react-spinners";
 
+import * as htmlToImage from "html-to-image";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { PuffLoader } from "react-spinners";
 
 const Template1 = () => {
   const { pathname } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const templateName = pathname?.split("/")?.slice(-1)[0];
-  const { data: user } = useUser();
-  const resumeRef = useRef(null);
-  const loadedTemplateId = resumeData?._id || 'defaultTemplateId';
+  const templateName = pathname?.split("/")?.slice(-1);
+  const searchParams = new URLSearchParams(location.search);
+  const loadedTemplateId = searchParams.get("templateId");
+  // console.log(pathname, templateName, loadedTemplateId);
 
-  // State for managing edit mode
   const [isEdit, setIsEdit] = useState(false);
+  const { data: user } = useUser();
 
-  // State for managing the image asset
+  const resumeRef = useRef(null);
+
   const [imageAsset, setImageAsset] = useState({
     isImageLoading: false,
     imageURL: null,
   });
 
-  // State for form data including personal info, experiences, education, and skills
-  const [formData, setFormData] = useState({
-    fullname: "Karen Richards",
-    professionalTitle: "Professional Title",
-    personalDescription: "Your personal description here",
-    refererName: "Sara Taylore",
-    refererRole: "Director | Company Name",
-    mobile: "+91 0000-0000",
-    email: "urname@gmail.com",
-    website: "urwebsite.com",
-    address: "your street address, city, zip",
-  });
-
-  // State for experiences, skills, and education
-  const [experiences, setExperiences] = useState([
-    {
-      id: 1, // Unique identifier for the experience
-      year: "2019 - 2021",
-      title: "Frontend Developer",
-      company: "Tech Solutions Inc",
-      description: "Developed and maintained user-facing features using React.js."
-    },
-    {
-      id: 2,
-      year: "2017 - 2019",
-      title: "UI/UX Designer",
-      company: "Creative Studio",
-      description: "Designed user interfaces and experiences for mobile and web applications."
-    },
-    // ... Add more experiences as needed
-  ]);
-  
-  const [skills, setSkills] = useState([
-    { id: 1, name: 'Adobe Photoshop', level: 90 },
-    { id: 2, name: 'HTML/CSS', level: 80 },
-    { id: 3, name: 'JavaScript', level: 85 },
-    { id: 4, name: 'UI/UX Design', level: 75 },
-    // Add more skills as needed
-  ]);
-  
-
-  const [education, setEducation] = useState([
-    {
-      major: "B.Sc. Computer Science",
-      university: "Stanford University",
-      year: "2011 - 2014"
-    },
-    {
-      major: "M.Sc. Advanced Computing",
-      university: "University of Chicago",
-      year: "2014 - 2016"
-    }
-    // Add more entries as needed
-  ]);
-  
-
-  // Hook for fetching resume data
   const {
     data: resumeData,
     isLoading: resume_isLoading,
@@ -101,717 +65,934 @@ const Template1 = () => {
     getTemplateDetailEditByUser(user?.uid, `${templateName}-${user?.uid}`)
   );
 
-  // useEffect for initializing form data when resumeData is fetched
+  const [formData, setFormData] = useState({
+    fullname: "Karen Richards",
+    professionalTitle: "Professional Title",
+    personalDescription: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?`,
+    refererName: "Sara Taylore",
+    refererRole: "Director | Company Name",
+    mobile: "+91 0000-0000",
+    email: "urname@gmail.com",
+    website: "urwebsite.com",
+    address: "your street address, ss, street, city/zip code - 1234",
+  });
+
+  const [experiences, setExperiences] = useState([
+    {
+      year: "2012 - 2014",
+      title: "Job Position Here",
+      companyAndLocation: "Company Name / Location here",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
+    },
+    {
+      year: "2012 - 2014",
+      title: "Job Position Here",
+      companyAndLocation: "Company Name / Location here",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
+    },
+    {
+      year: "2012 - 2014",
+      title: "Job Position Here",
+      companyAndLocation: "Company Name / Location here",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
+    },
+  ]);
+
+  const [skills, setSkills] = useState([
+    {
+      title: "skill1",
+      percentage: "75",
+    },
+    {
+      title: "skill2",
+      percentage: "75",
+    },
+    {
+      title: "skill3",
+      percentage: "75",
+    },
+    {
+      title: "skill4",
+      percentage: "75",
+    },
+    {
+      title: "skill5",
+      percentage: "75",
+    },
+  ]);
+
+  const [education, setEducation] = useState([
+    {
+      major: "ENTER YOUR MAJOR",
+      university: "Name of your university / college 2005-2009",
+    },
+  ]);
+
   useEffect(() => {
     if (resumeData?.formData) {
-      setFormData(resumeData.formData);
+      setFormData({ ...resumeData?.formData });
     }
     if (resumeData?.experiences) {
-      setExperiences(resumeData.experiences);
+      setExperiences(resumeData?.experiences);
     }
     if (resumeData?.skills) {
-      setSkills(resumeData.skills);
+      setSkills(resumeData?.skills);
     }
     if (resumeData?.education) {
-      setEducation(resumeData.education);
+      setEducation(resumeData?.education);
     }
     if (resumeData?.userProfilePic) {
-      setImageAsset(prevAsset => ({
+      setImageAsset((prevAsset) => ({
         ...prevAsset,
-        imageURL: resumeData.userProfilePic,
+        imageURL: resumeData?.userProfilePic,
       }));
     }
   }, [resumeData]);
 
- // Function to handle the image upload
- const handleFileSelect = async (event) => {
-  const file = event.target.files[0]; // Get the file from the event
-  if (file) {
-    const fileType = file['type'];
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-    if (!validImageTypes.includes(fileType)) {
-      toast.error('This file is not an image');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const toggleEditable = () => {
+    setIsEdit(!isEdit);
+    var inputs = document.querySelectorAll("input");
+    var textarea = document.querySelectorAll("textarea");
+
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].readOnly = !inputs[i].readOnly;
+    }
+
+    for (var i = 0; i < textarea.length; i++) {
+      textarea[i].readOnly = !textarea[i].readOnly;
+    }
+  };
+
+  // image upload to the cloud
+  const handleFileSelect = async (event) => {
+    setImageAsset((prevAsset) => ({ ...prevAsset, isImageLoading: true }));
+    // console.log(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file && isAllowed(file)) {
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        const dataURL = event.target.result;
+        console.log("Data URL:", dataURL);
+
+        // You can now use the dataURL as needed, e.g., to display an image.
+        setImageAsset((prevAsset) => ({
+          ...prevAsset,
+          imageURL: dataURL,
+        }));
+      };
+
+      // Read the file as a Data URL
+      reader.readAsDataURL(file);
+    } else {
+      toast.error("Invalid File Format");
+    }
+  };
+
+  const isAllowed = (file) => {
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    return allowedTypes.includes(file.type);
+  };
+
+  // delete an image
+  const deleteImageObject = () => {
+    setImageAsset((prevAsset) => ({
+      ...prevAsset,
+      imageURL: null,
+    }));
+  };
+
+  // uploader finshed
+
+  const handleExpChange = (index, e) => {
+    const { name, value } = e.target;
+    // Create a copy of the workExperiences array
+    const updatedExperiences = [...experiences];
+    // Update the specific field for the experience at the given index
+    updatedExperiences[index][name] = value;
+    // Update the state with the modified array
+    setExperiences(updatedExperiences);
+  };
+
+  const removeExperience = (index) => {
+    // Create a copy of the workExperiences array and remove the experience at the given index
+    const updatedExperiences = [...experiences];
+    updatedExperiences.splice(index, 1);
+    // Update the state with the modified array
+    setExperiences(updatedExperiences);
+  };
+
+  const addExperience = () => {
+    // Create a copy of the workExperiences array and add a new experience
+    const updatedExperiences = [
+      ...experiences,
+      {
+        year: "2012 - 2014",
+        title: "Job Position Here",
+        companyAndLocation: "Company Name / Location here",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
+      },
+    ];
+    // Update the state with the modified array
+    setExperiences(updatedExperiences);
+  };
+
+  const handleSkillsChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedSkills = [...skills];
+    updatedSkills[index][name] = value;
+    setSkills(updatedSkills);
+  };
+
+  const removeSkill = (index) => {
+    const updatedSkills = [...skills];
+    updatedSkills.splice(index, 1);
+    setSkills(updatedSkills);
+  };
+
+  const addSkill = () => {
+    const updatedSkills = [
+      ...skills,
+      {
+        title: "skill1",
+        percentage: "75",
+      },
+    ];
+    setSkills(updatedSkills);
+  };
+
+  const handleEducationChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedEdu = [...education];
+    updatedEdu[index][name] = value;
+    setEducation(updatedEdu);
+  };
+
+  const removeEducation = (index) => {
+    const updatedEdu = [...education];
+    updatedEdu.splice(index, 1);
+    setEducation(updatedEdu);
+  };
+
+  const addEducation = () => {
+    const updatedEdu = [
+      ...education,
+      {
+        major: "ENTER YOUR MAJOR",
+        university: "Name of your university / college 2005-2009",
+      },
+    ];
+    setEducation(updatedEdu);
+  };
+
+  const saveFormData = async () => {
+    const timeStamp = serverTimestamp();
+    const resume_id = `${templateName}-${user?.uid}`;
+    const imageURL = await getImage();
+    const _doc = {
+      _id: loadedTemplateId,
+      resume_id,
+      formData,
+      education,
+      experiences,
+      skills,
+      timeStamp,
+      userProfilePic: imageAsset.imageURL,
+      imageURL,
+    };
+    console.log(_doc);
+    setDoc(doc(db, "users", user?.uid, "resumes", resume_id), _doc)
+      .then(() => {
+        toast.success(`Data Saved`);
+        refetch_resumeData();
+      })
+      .catch((err) => {
+        toast.error(`Error : ${err.message}`);
+      });
+  };
+
+  const generatePDF = async () => {
+    // Access the DOM element using the useRef reference.
+    const element = resumeRef.current;
+
+    if (!element) {
+      console.error("Unable to capture content. The DOM element is null.");
       return;
     }
-    setImageAsset((prevAsset) => ({ ...prevAsset, isImageLoading: true }));
-    
-    // Create a storage reference
-    const storageRef = ref(storage, `profile-images/${Date.now()}-${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-      },
-      (error) => {
-        console.log(error);
-        toast.error('Error uploading file');
-        setImageAsset((prevAsset) => ({ ...prevAsset, isImageLoading: false }));
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageAsset({ isImageLoading: false, imageURL: downloadURL });
-          toast.success('Image uploaded successfully');
+
+    htmlToImage
+      .toPng(element)
+      .then(function (dataUrl) {
+        const a4Width = 210;
+        const a4Height = 297;
+        var pdf = new jsPDF({
+          orientation: "p",
+          unit: "mm",
+          format: [a4Width, a4Height],
         });
-      }
-    );
-  } else {
-    // No file selected
-    toast.error('No file selected');
-  }
-};
 
-const toggleEditable = () => {
-  setIsEdit((prevEdit) => {
-    // If we're starting to edit, make all inputs and textareas editable
-    if (!prevEdit) {
-      const inputs = document.querySelectorAll('input, textarea');
-      inputs.forEach(input => {
-        input.removeAttribute('readOnly');
+        const aspectRatio = a4Width / a4Height;
+        const imgWidth = a4Width;
+        const imgHeight = a4Width / aspectRatio;
+
+        const verticalMargin = (a4Height - imgHeight) / 2;
+
+        pdf.addImage(dataUrl, "PNG", 0, verticalMargin, imgWidth, imgHeight);
+
+        pdf.save("resume.pdf");
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
       });
-    } else {
-      // If we're finishing editing, make all inputs and textareas read-only again
-      const inputs = document.querySelectorAll('input, textarea');
-      inputs.forEach(input => {
-        input.setAttribute('readOnly', true);
+  };
+
+  const getImage = async () => {
+    const element = resumeRef.current;
+    element.onload = async () => {
+      // Call the image capture code here
+    };
+    element.onerror = (error) => {
+      console.error("Image loading error:", error);
+    };
+    if (!element) {
+      console.error("Unable to capture content. The DOM element is null.");
+      return;
+    }
+    try {
+      const dataUrl = await htmlToImage.toJpeg(element);
+      console.log(dataUrl);
+      return dataUrl;
+    } catch (error) {
+      console.error("Oops, something went wrong!", error.message);
+      return null; // Return a default value or handle the error appropriately
+    }
+  };
+
+  const generateImage = async () => {
+    const element = resumeRef.current;
+    if (!element) {
+      console.error("Unable to capture content. The DOM element is null.");
+      return;
+    }
+    htmlToImage
+      .toJpeg(element)
+      .then(function (dataUrl) {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "resume.jpg";
+        a.click();
+      })
+      .catch(function (error) {
+        console.error("Oops, something went wrong!", error);
       });
+  };
+
+  const generatePng = async () => {
+    const element = resumeRef.current;
+    if (!element) {
+      console.error("Unable to capture content. The DOM element is null.");
+      return;
     }
-    return !prevEdit; // Toggle the isEdit state
-  });
-};
-
-  // Form change handler
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: value,
-  }));
-};
-
-
-  // Experience handling
-const handleExpChange = (index, e) => {
-  const { name, value } = e.target;
-  setExperiences((prevExperiences) => {
-    const updatedExperiences = [...prevExperiences];
-    updatedExperiences[index] = {
-      ...updatedExperiences[index],
-      [name]: value,
-    };
-    return updatedExperiences;
-  });
-};
-
-
-const addExperience = () => {
-  // Create a new experience object with default values
-  const newExperience = {
-    year: "Year Range",
-    title: "New Job Position",
-    companyAndLocation: "Company Name / Location",
-    description: "Job description here.",
+    htmlToImage
+      .toPng(element)
+      .then(function (dataUrl) {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "resume.png";
+        a.click();
+      })
+      .catch(function (error) {
+        console.error("Oops, something went wrong!", error);
+      });
   };
 
-  // Update the experiences state to include the new experience
-  setExperiences([...experiences, newExperience]);
-};
-
-
-const removeExperience = (index) => {
-  // Filter out the experience at the given index
-  const updatedExperiences = experiences.filter((_, i) => i !== index);
-  // Update the state with the new array of experiences
-  setExperiences(updatedExperiences);
-};
-
-
-const handleSkillsChange = (index, e) => {
-  const { name, value } = e.target;
-  // Create a new array with the same objects except for the one being changed
-  const updatedSkills = skills.map((skill, i) => {
-    if (i === index) {
-      // Return a new object with the updated values, but same structure
-      return { ...skill, [name]: value };
+  const generateSvg = async () => {
+    const element = resumeRef.current;
+    if (!element) {
+      console.error("Unable to capture content. The DOM element is null.");
+      return;
     }
-    return skill;
-  });
-  // Update the state with the new skills array
-  setSkills(updatedSkills);
-};
-
-
-const addSkill = () => {
-  // Create a new skill object with default values
-  const newSkill = {
-    title: "New Skill",
-    percentage: "50", // Default skill level percentage
+    htmlToImage
+      .toSvg(element)
+      .then(function (dataUrl) {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "resume.svg";
+        a.click();
+      })
+      .catch(function (error) {
+        console.error("Oops, something went wrong!", error);
+      });
   };
-
-  // Update the skills state to include the new skill
-  setSkills([...skills, newSkill]);
-};
-
-
-const removeSkill = (index) => {
-  // Create a new array that filters out the skill at the specified index
-  const updatedSkills = skills.filter((_, i) => i !== index);
-  // Update the state with the new skills array
-  setSkills(updatedSkills);
-};
-
-
-const handleEducationChange = (index, e) => {
-  const { name, value } = e.target;
-  // Create a new array with updated education objects
-  const updatedEducation = education.map((edu, i) => {
-    if (i === index) {
-      // Only update the object at the specified index
-      return { ...edu, [name]: value };
-    }
-    return edu;
-  });
-  // Update the state with the new education array
-  setEducation(updatedEducation);
-};
-
-
-const addEducation = () => {
-  // Create a new education object with default values
-  const newEducation = {
-    major: "New Major",
-    university: "New University",
-    fromYear: "Start Year",
-    toYear: "End Year" // Additional fields can be added as needed
-  };
-
-  // Update the education state to include the new education entry
-  setEducation([...education, newEducation]);
-};
-
-
-const removeEducation = (index) => {
-  // Create a new array that filters out the education entry at the specified index
-  const updatedEducation = education.filter((_, i) => i !== index);
-  // Update the state with the new education array
-  setEducation(updatedEducation);
-};
-
-const handleReferenceChange = (index, e) => {
-  const updatedReferences = [...formData.references];
-  updatedReferences[index] = {
-    ...updatedReferences[index],
-    [e.target.name]: e.target.value
-  };
-  setFormData({...formData, references: updatedReferences});
-};
-
-const deleteImageObject = () => {
-  setImageAsset(prev => ({ ...prev, imageURL: null }));
-  toast.info('Image removed successfully');
-};
-
-
-const addReference = () => {
-  const newReference = { name: '', role: '', contact: '' };
-  setFormData(prev => ({ ...prev, references: [...prev.references, newReference] }));
-};
-
-const removeReference = (index) => {
-  const filteredReferences = formData.references.filter((_, i) => i !== index);
-  setFormData({...formData, references: filteredReferences});
-};
-
-
-const saveFormData = async () => {
-  const timeStamp = serverTimestamp();
-  const resume_id = `${templateName}-${user?.uid}`;
-  const imageURL = await getImage(); // Ensure getImage function is implemented to fetch or process the image URL
-  
-  const documentData = {
-    _id: loadedTemplateId,
-    resume_id,
-    formData,
-    education,
-    experiences,
-    skills,
-    timeStamp,
-    userProfilePic: imageAsset.imageURL,
-    imageURL,
-  };
-
-  try {
-    // Save the document data to the Firestore
-    await setDoc(doc(db, "users", user?.uid, "resumes", resume_id), documentData);
-    toast.success("Data Saved Successfully");
-    refetch_resumeData(); // Refetch the resume data if necessary
-  } catch (error) {
-    console.error("Error saving data: ", error);
-    toast.error(`Error saving data: ${error.message}`);
-  }
-};
-const getImage = async () => {
-  if (!resumeRef.current) {
-    console.error("DOM element is not accessible");
-    return null;
-  }
-  try {
-    return await htmlToImage.toPng(resumeRef.current);
-  } catch (error) {
-    console.error("Failed to convert image:", error);
-    return null;
-  }
-};
-const generatePDF = async () => {
-  // Ensure the element exists
-  const element = resumeRef.current;
-  if (!element) {
-    console.error("Unable to capture content. The DOM element is null.");
-    toast.error("Failed to generate PDF: No content available.");
-    return;
-  }
-
-  // Use html-to-image to convert the React DOM to an image
-  try {
-    const dataUrl = await htmlToImage.toPng(element);
-
-    // Create a PDF from the image
-    const pdf = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: 'a4'
-    });
-  
-    
-
-
-    const deleteImageObject = () => {
-        setImageAsset({ ...imageAsset, imageURL: null });
-        toast.info('Image removed successfully');
-    };
-
-
-    const imgProps = pdf.getImageProperties(dataUrl);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    const verticalMargin = (pdf.internal.pageSize.getHeight() - pdfHeight) / 2;
-
-    pdf.addImage(dataUrl, 'PNG', 0, verticalMargin, pdfWidth, pdfHeight);
-    pdf.save('resume.pdf'); // Save the PDF with a dynamic filename if needed
-  } catch (error) {
-    console.error("Failed to generate PDF:", error);
-    toast.error(`Failed to generate PDF: ${error.message}`);
-  }
-};
-
-
-  // Loading and error handling
-if (resume_isLoading) return <MainSpinner />;
-if (resume_isError) {
-  return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <p className="text-lg text-red-500">Error loading the resume data. Please try again later.</p>
-    </div>
-  );
-}
-
-
- // Render component
-return (
-  <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-1/4 bg-gray-800 text-white p-8 space-y-6">
-          <div className="profile-image mb-4">
-              {imageAsset.imageURL ? (
-                  <img src={imageAsset.imageURL} alt="Profile" className="w-32 h-32 rounded-full mx-auto" />
-              ) : (
-                  <div className="w-32 h-32 bg-gray-400 rounded-full mx-auto flex items-center justify-center">
-                      <span>No Image</span>
-                  </div>
-              )}
-              {isEdit && (
-                  <div className="mt-2 text-center">
-                      <input type="file" onChange={handleFileSelect} className="text-sm text-blue-500"/>
-                      {imageAsset.imageURL && (
-                          <button onClick={() => setImageAsset({ ...imageAsset, imageURL: null })} className="ml-2 bg-red-500 text-white p-1 rounded">
-                              Remove
-                          </button>
-                      )}
-                  </div>
-              )}
-          </div>
-          <div>
-              <h3 className="text-lg font-bold">Contact Information</h3>
-              <p>Email: {formData.email}</p>
-              <p>Phone: {formData.mobile}</p>
-              {/* Add more contact information fields as needed */}
-          </div>
-          {/* Include additional sections for references or other personal information as needed */}
-      </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 bg-white p-8">
-          <header className="mb-4">
-              <h1 className="text-3xl font-bold">{formData.fullname}</h1>
-              <h2 className="text-xl text-gray-600">{formData.professionalTitle}</h2>
-          </header>
-          <section className="mb-4">
-              <h3 className="text-2xl font-bold">About Me</h3>
-              <p>{formData.personalDescription}</p>
-          </section>
-          {/* Experience Section */}
-          <section className="mb-4">
-              <h3 className="text-2xl font-bold">Experience</h3>
-              {/* Map through experiences and render them */}
-              {experiences.map((exp, index) => (
-                  <div key={index} className="mb-2">
-                      <h4 className="text-xl font-semibold">{exp.title}</h4>
-                      <p>{exp.description}</p>
-                  </div>
-              ))}
-          </section>
-          {/* Skills Section */}
-          <section className="mb-4">
-              <h3 className="text-2xl font-bold">Skills</h3>
-              {/* Map through skills and render them */}
-              {skills.map((skill, index) => (
-                  <div key={index} className="mb-2">
-                      <span className="font-semibold">{skill.name}</span>: {skill.level}%
-                  </div>
-              ))}
-          </section>
-          {/* Control Buttons */}
-          <div className="flex space-x-4">
-              <button onClick={toggleEditable} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  {isEdit ? "Save" : "Edit"}
-              </button>
-              <button onClick={generatePDF} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Download PDF
-              </button>
-          </div>
-      </main>
-  </div>
-);
 
   if (resume_isLoading) return <MainSpinner />;
 
   if (resume_isError) {
     return (
-        <div className="w-full h-screen flex flex-col items-center justify-center">
-            <p className="text-lg text-red-500">Unable to load the resume data. Please check your connection and try again.</p>
-            <button onClick={() => refetch_resumeData()} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Retry
-            </button>
-        </div>
+      <div className="w-full h-[60vh] flex flex-col items-center justify-center">
+        <p className="text-lg text-txtPrimary font-semibold">
+          Error While fetching the data
+        </p>
+      </div>
     );
-}
+  }
 
-  // Here is the complete React component
   return (
-    <div className="flex">
-    {/* Sidebar */}
-    <aside className="w-1/4 bg-gray-800 text-white p-8 space-y-6">
-        {/* Profile image */}
-        <div className="w-32 h-32 bg-gray-300 rounded-full overflow-hidden mx-auto">
-            {imageAsset ? (
-                <img src={imageAsset.imageURL} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-                <div className="flex items-center justify-center h-full">
-                    {isEdit ? <input type="file" onChange={handleFileSelect} /> : "No Image"}
-                </div>
-            )}
-            {isEdit && imageAsset.imageURL && (
-                <button onClick={deleteImageObject} className="text-xs">Remove</button>
-            )}
-        </div>
-        </aside>
-  </div>
-);
-   
-      {/* Contact Information */}
-<div className="space-y-2">
-    <h3 className="text-lg font-bold">Contact Information</h3>
-    <div className="flex flex-col space-y-1">
-        <label className="font-medium">Email:</label>
-        <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            readOnly={!isEdit}
-            className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-        />
+    <div className="w-full flex flex-col items-center justify-start gap-4">
+      {/* bread crump */}
+      <div className="w-full flex items-center gap-2 px-4">
+        <Link
+          to={"/"}
+          className="flex items-center justify-center gap-2 text-txtPrimary"
+        >
+          <FaHouse />
+          Home
+        </Link>
+        <p
+          className="text-txtPrimary cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          / Template1 /
+        </p>
+        <p>Edit</p>
+      </div>
 
-        <label className="font-medium">Phone:</label>
-        <input
-            type="text"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            readOnly={!isEdit}
-            className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-        />
-
-        <label className="font-medium">Website:</label>
-        <input
-            type="text"
-            name="website"
-            value={formData.website}
-            onChange={handleChange}
-            readOnly={!isEdit}
-            className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-        />
-
-        <label className="font-medium">Address:</label>
-        <textarea
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            readOnly={!isEdit}
-            className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-        />
-    </div>
-</div>
-
-
-       {/* References Section */}
-<div className="space-y-2">
-    <h3 className="text-lg font-bold">References</h3>
-    {formData.references && formData.references.length > 0 ? (
-        formData.references.map((reference, index) => (
-            <div key={index} className="flex flex-col bg-white p-2 rounded shadow space-y-1">
-                <label className="font-medium">Name:</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={reference.name}
-                    onChange={(e) => handleReferenceChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                <label className="font-medium">Role:</label>
-                <input
-                    type="text"
-                    name="role"
-                    value={reference.role}
-                    onChange={(e) => handleReferenceChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                <label className="font-medium">Contact:</label>
-                <input
-                    type="text"
-                    name="contact"
-                    value={reference.contact}
-                    onChange={(e) => handleReferenceChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                {isEdit && (
-                    <button onClick={() => removeReference(index)} className="text-red-500 hover:text-red-700">
-                        Remove Reference
-                    </button>
-                )}
+      <div className="w-full lg:w-[1200px] grid grid-cols-1 lg:grid-cols-12 px-6 lg:px-32">
+        {/* template design */}
+        <div className="col-span-12 px-4 py-6">
+          <div className="flex items-center justify-end w-full gap-12 mb-4">
+            <div
+              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-200 cursor-pointer"
+              onClick={toggleEditable}
+            >
+              {isEdit ? (
+                <FaPenToSquare className="text-sm text-txtPrimary" />
+              ) : (
+                <FaPencil className="text-sm text-txtPrimary" />
+              )}
+              <p className="text-sm text-txtPrimary">Edit</p>
             </div>
-        ))
-    ) : (
-        <p>No references added.</p>
-    )}
 
-    {isEdit && (
-        <button onClick={addReference} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Reference
-        </button>
-    )}
-</div>
-
-
-      {/* Education Section */}
-<div className="space-y-2">
-    <h3 className="text-lg font-bold">Education</h3>
-    {education.length > 0 ? (
-        education.map((edu, index) => (
-            <div key={index} className="flex flex-col bg-white p-2 rounded shadow space-y-1">
-                <label className="font-medium">Major:</label>
-                <input
-                    type="text"
-                    name="major"
-                    value={edu.major}
-                    onChange={(e) => handleEducationChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                <label className="font-medium">University:</label>
-                <input
-                    type="text"
-                    name="university"
-                    value={edu.university}
-                    onChange={(e) => handleEducationChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                <label className="font-medium">Year:</label>
-                <input
-                    type="text"
-                    name="year"
-                    value={edu.year}
-                    onChange={(e) => handleEducationChange(index, e)}
-                    readOnly={!isEdit}
-                    className={`w-full p-2 rounded ${!isEdit ? "bg-gray-200" : "bg-white"}`}
-                />
-
-                {isEdit && (
-                    <button onClick={() => removeEducation(index)} className="text-red-500 hover:text-red-700">
-                        Remove
-                    </button>
-                )}
+            <div
+              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-200 cursor-pointer"
+              onClick={saveFormData}
+            >
+              <BiSolidBookmarks className="text-sm text-txtPrimary" />
+              <p className="text-sm text-txtPrimary">Save</p>
             </div>
-        ))
-    ) : (
-        <p>No education records found.</p>
-    )}
 
-    {isEdit && (
-        <button onClick={addEducation} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Education
-        </button>
-    )}
-</div>
+            <div className=" flex items-center justify-center gap-2">
+              <p className="text-sm text-txtPrimary">Download : </p>
+              <BsFiletypePdf
+                className="text-2xl text-txtPrimary cursor-pointer"
+                onClick={generatePDF}
+              />
+              <BsFiletypePng
+                onClick={generatePng}
+                className="text-2xl text-txtPrimary cursor-pointer"
+              />
+              <BsFiletypeJpg
+                className="text-2xl text-txtPrimary cursor-pointer"
+                onClick={generateImage}
+              />
+              <BsFiletypeSvg
+                onClick={generateSvg}
+                className="text-2xl text-txtPrimary cursor-pointer"
+              />
+            </div>
+          </div>
+          <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
+            <div className="col-span-4 bg-black flex flex-col items-center justify-start">
+              <div className="w-full h-80 bg-gray-300 flex items-center justify-center">
+                {!imageAsset.imageURL ? (
+                  <React.Fragment>
+                    <label className=" w-full cursor-pointer h-full">
+                      <div className="w-full flex flex-col items-center justify-center h-full">
+                        <div className="w-full flex flex-col justify-center items-center cursor-pointer">
+                          <img
+                            src={TemplateOne}
+                            className="rounded-full w-32 h-32 object-cover"
+                            alt=""
+                          />
+                        </div>
+                      </div>
 
-
-      {/* Main Content */}
-      <main className="w-3/4 bg-white p-8 space-y-6">
-        {/* Header */}
-        <header className="space-y-2">
-          <h1 className="text-4xl font-bold">{formData.fullname}</h1>
-          <h2 className="text-xl text-gray-600">{formData.professionalTitle}</h2>
-        </header>
-
-        {/* About Section */}
-        <section>
-          <h3 className="text-2xl font-bold mb-2">About Me</h3>
-          <textarea
-            readOnly={!isEdit}
-            value={formData.personalDescription}
-            onChange={handleChange}
-            name="personalDescription"
-            className="w-full p-2 text-gray-700"
-        
-          />
-        </section>
-
-       {/* Experience Section */}
-<section className="space-y-4">
-    <h3 className="text-2xl font-bold mb-2">Experience</h3>
-    {experiences.length > 0 ? (
-        experiences.map((exp, index) => (
-            <div key={exp.id} className="bg-white shadow p-4 rounded-lg">
-                <div className="flex justify-between">
-                    <h4 className="text-xl font-semibold">{exp.title}</h4>
-                    {isEdit && (
-                        <button onClick={() => removeExperience(index)} className="text-red-500">
-                            Remove
-                        </button>
-                    )}
-                </div>
-                <p className="text-gray-800">{exp.description}</p>
-                <div className="mt-2">
-                    <span className="text-gray-600">{exp.company}</span>
-                    <span className="mx-2">|</span>
-                    <span className="text-gray-600">{exp.year}</span>
-                </div>
-                {isEdit && (
-                    <div className="mt-2">
+                      {isEdit && (
                         <input
-                            type="text"
-                            name="title"
-                            value={exp.title}
-                            onChange={(e) => handleExpChange(index, e)}
-                            className="p-1 rounded border-gray-300 shadow-sm w-full"
+                          type="file"
+                          className="w-0 h-0"
+                          accept=".jpeg,.jpg,.png"
+                          onChange={handleFileSelect}
                         />
-                        <textarea
-                            name="description"
-                            value={exp.description}
-                            onChange={(e) => handleExpChange(index, e)}
-                            rows="3"
-                            className="p-1 mt-2 rounded border-gray-300 shadow-sm w-full"
-                        />
-                    </div>
-                )}
-            </div>
-        ))
-    ) : (
-        <p>No experiences listed.</p>
-    )}
-    {isEdit && (
-        <button onClick={addExperience} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Experience
-        </button>
-    )}
-</section>
-
-        {/* Skills Section */}
-<section>
-    <h3 className="text-2xl font-bold mb-2">Skills</h3>
-    {skills.length > 0 ? (
-        skills.map((skill, index) => (
-            <div key={skill.id} className="flex flex-col mb-4">
-                <div className="flex justify-between items-center">
-                    <span className="text-lg font-medium">{skill.name}</span>
-                    {isEdit && (
-                        <button onClick={() => removeSkill(index)} className="text-red-500">
-                            Remove
-                        </button>
-                    )}
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                    <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${skill.level}%` }}></div>
-                </div>
-                {isEdit && (
-                    <input
-                        type="text"
-                        name="level"
-                        value={skill.level}
-                        onChange={(e) => handleSkillsChange(index, e)}
-                        className="mt-2 p-1 w-full rounded border-gray-300 shadow-sm"
-                        placeholder="Skill proficiency (0-100%)"
+                      )}
+                    </label>
+                  </React.Fragment>
+                ) : (
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden">
+                    <img
+                      src={imageAsset.imageURL}
+                      alt="uploaded image"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
                     />
+
+                    {isEdit && (
+                      <div
+                        className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500 cursor-pointer"
+                        onClick={deleteImageObject}
+                      >
+                        <FaTrash className="text-sm text-white" />
+                      </div>
+                    )}
+                  </div>
                 )}
+              </div>
+              {/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+              <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
+                <div className="w-full">
+                  <p className="uppercase text-lg font-semibold text-gray-100">
+                    Education
+                  </p>
+                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
+                  <AnimatePresence>
+                    {education &&
+                      education?.map((edu, i) => (
+                        <motion.div
+                          key={i}
+                          {...opacityINOut(i)}
+                          className="w-full pl-4 mt-3 relative"
+                        >
+                          <input
+                            type="text"
+                            readOnly="true"
+                            name="major"
+                            value={edu.major}
+                            onChange={(e) => handleEducationChange(i, e)}
+                            className={`bg-transparent outline-none border-none text-sm font-semibold uppercase  text-gray-100  ${
+                              isEdit && "text-yellow-400 w-full"
+                            }`}
+                          />
+
+                          <textarea
+                            readOnly="true"
+                            className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
+                              isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                            }`}
+                            name="university"
+                            value={edu.university}
+                            onChange={(e) => handleEducationChange(i, e)}
+                            rows="2"
+                            style={{
+                              maxHeight: "auto",
+                              minHeight: "40px",
+                              resize: "none",
+                            }}
+                          />
+                          <AnimatePresence>
+                            {isEdit && (
+                              <motion.div
+                                {...FadeInOutWithOpacityAlone}
+                                onClick={() => removeEducation(i)}
+                                className="cursor-pointer absolute right-2 top-0"
+                              >
+                                <FaTrash className="text-sm text-gray-100" />
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      ))}
+                  </AnimatePresence>
+                </div>
+
+                <AnimatePresence>
+                  {isEdit && (
+                    <motion.div
+                      {...FadeInOutWithOpacityAlone}
+                      onClick={addEducation}
+                      className="cursor-pointer"
+                    >
+                      <FaPlus className="text-base text-gray-100" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* reference */}
+                <div className="w-full">
+                  <p className="uppercase text-lg font-semibold text-gray-100">
+                    Reference
+                  </p>
+                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
+                  <div className="w-full pl-4 mt-3">
+                    <input
+                      value={formData.refererName}
+                      onChange={handleChange}
+                      name="refererName"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererRole}
+                      onChange={handleChange}
+                      name="refererRole"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col items-start justify-start mt-6 gap-6">
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Phone
+                      </p>
+                    </div>
+                    <input
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      name="mobile"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                {/* email */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Email
+                      </p>
+                    </div>
+                    <input
+                      value={formData.email}
+                      onChange={handleChange}
+                      name="email"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                {/* website */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Website
+                      </p>
+                    </div>
+
+                    <input
+                      value={formData.website}
+                      onChange={handleChange}
+                      name="website"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                {/* address */}
+                <div className="w-full grid grid-cols-12">
+                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
+                  <div className="col-span-9">
+                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
+                      <p className="text-sm font-semibold text-gray-200">
+                        Address
+                      </p>
+                    </div>
+
+                    <textarea
+                      readOnly="true"
+                      className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
+                        isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                      }`}
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      rows="2"
+                      style={{
+                        maxHeight: "auto",
+                        minHeight: "40px",
+                        resize: "none",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-        ))
-    ) : (
-        <p>No skills added.</p>
-    )}
-    {isEdit && (
-        <button onClick={addSkill} className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add Skill
-        </button>
-    )}
-</section>
+            <div className="col-span-8 flex flex-col items-center justify-start py-6 bg-white">
+              <div className="w-full py-6"></div>
+              {/* title */}
+              <div className="w-full px-8 py-6 bg-yellow-500">
+                <div className="flex items-center justify-start ">
+                  <input
+                    type="text"
+                    readOnly="true"
+                    name="fullname"
+                    value={formData.fullname}
+                    onChange={handleChange}
+                    className={`bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
+                      isEdit && "text-white w-full"
+                    }`}
+                  />
+                </div>
 
+                <input
+                  value={formData.professionalTitle}
+                  onChange={handleChange}
+                  name="professionalTitle"
+                  type="text"
+                  readOnly="true"
+                  className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
+                    isEdit && "text-white"
+                  }`}
+                />
+              </div>
 
-       {/* Control Buttons */}
-    <div className="flex justify-end space-x-4">
-      <button onClick={toggleEditable} className="p-2 bg-blue-500 text-white rounded">
-        {isEdit ? "Finish Editing" : "Edit"}
-      </button>
-      <button onClick={saveFormData} className="p-2 bg-green-500 text-white rounded">
-        Save
-      </button>
-      <button onClick={generatePDF} className="p-2 bg-red-500 text-white rounded">
-        Download PDF
-      </button>
-      {/* You can add other download buttons here for different formats like PNG, JPEG, etc. */}
+              {/* about me */}
+              <div className="w-full px-8 py-6 flex flex-col items-start justify-start gap-6">
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">About Me</p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <textarea
+                    readOnly="true"
+                    className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                      isEdit ? "bg-gray-200" : "bg-transparent"
+                    }`}
+                    name="personalDescription"
+                    value={formData.personalDescription}
+                    onChange={handleChange}
+                    rows="4"
+                    style={{
+                      minHeight: "100px",
+                      width: "100%",
+                      height: "100px",
+                      resize: "none",
+                    }}
+                  />
+                </div>
+
+                {/* experience */}
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">
+                    Work Experience
+                  </p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <div className="w-full flex flex-col items-center justify-start gap-4">
+                    <AnimatePresence>
+                      {experiences &&
+                        experiences?.map((exp, i) => (
+                          <motion.div
+                            {...opacityINOut(i)}
+                            className="w-full grid grid-cols-12"
+                            key={i}
+                          >
+                            <div className="col-span-4">
+                              <input
+                                value={exp.year}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="year"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+                            </div>
+                            <div className="col-span-8 relative">
+                              <AnimatePresence>
+                                {isEdit && (
+                                  <motion.div
+                                    {...FadeInOutWithOpacityAlone}
+                                    onClick={() => removeExperience(i)}
+                                    className="cursor-pointer absolute right-0 top-2"
+                                  >
+                                    <FaTrash className="text-base text-txtPrimary" />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                              <input
+                                value={exp.title}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="title"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+
+                              <input
+                                value={exp.companyAndLocation}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="companyAndLocation"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+
+                              <textarea
+                                readOnly="true"
+                                className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                                name="description"
+                                value={exp.description}
+                                onChange={(e) => handleExpChange(i, e)}
+                                rows="3"
+                                style={{
+                                  maxHeight: "auto",
+                                  minHeight: "60px",
+                                  resize: "none",
+                                }}
+                              />
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                      {isEdit && (
+                        <motion.div
+                          {...FadeInOutWithOpacityAlone}
+                          onClick={addExperience}
+                          className="cursor-pointer"
+                        >
+                          <FaPlus className="text-base text-txtPrimary" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* skills */}
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider">Skills</p>
+                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <div className="w-full flex flex-wrap items-center justify-start gap-4">
+                    <AnimatePresence>
+                      {skills &&
+                        skills?.map((skill, i) => (
+                          <motion.div
+                            key={i}
+                            {...opacityINOut(i)}
+                            className="flex-1"
+                            style={{ minWidth: 225 }}
+                          >
+                            <div className="w-full flex items-center justify-between">
+                              <div className="flex items-center justify-center">
+                                <input
+                                  value={skill.title}
+                                  onChange={(e) => handleSkillsChange(i, e)}
+                                  name="title"
+                                  type="text"
+                                  readOnly="true"
+                                  className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                    isEdit ? "bg-gray-200" : "bg-transparent"
+                                  }`}
+                                />
+
+                                <AnimatePresence>
+                                  {isEdit && (
+                                    <motion.input
+                                      {...FadeInOutWithOpacityAlone}
+                                      value={skill.percentage}
+                                      onChange={(e) => handleSkillsChange(i, e)}
+                                      name="percentage"
+                                      type="text"
+                                      className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
+                                        isEdit
+                                          ? "bg-gray-200"
+                                          : "bg-transparent"
+                                      }`}
+                                    />
+                                  )}
+                                </AnimatePresence>
+                              </div>
+
+                              <AnimatePresence>
+                                {isEdit && (
+                                  <motion.div
+                                    {...FadeInOutWithOpacityAlone}
+                                    onClick={() => removeSkill(i)}
+                                    className="cursor-pointer "
+                                  >
+                                    <FaTrash className="text-base text-txtPrimary" />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                            <div className="relative mt-2 w-full h-1 rounded-md bg-gray-400">
+                              <div
+                                className="h-full rounded-md bg-gray-600"
+                                style={{
+                                  width: `${skill.percentage}%`,
+                                  transition: "width 0.3s ease",
+                                }}
+                              ></div>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+                  <AnimatePresence>
+                    {isEdit && (
+                      <div className="w-full  flex items-center justify-center py-4">
+                        <motion.div
+                          {...FadeInOutWithOpacityAlone}
+                          onClick={addSkill}
+                          className="cursor-pointer"
+                        >
+                          <FaPlus className="text-base text-txtPrimary" />
+                        </motion.div>
+                      </div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
-
+  );
 };
 
 export default Template1;
