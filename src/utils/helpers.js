@@ -1,5 +1,5 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { Template1, Template2, Template3 } from "../designs";
+import { Template1, Template2, Template3, Template4, Template5 } from "../designs";
 import { toast } from "react-toastify";
 import { db } from "../config/firebase.config";
 
@@ -38,6 +38,9 @@ export const TemplatesData = [
   { id: `template1-${Date.now()}`, name: "Template1", component: Template1 },
   { id: `template2-${Date.now()}`, name: "Template2", component: Template2 },
   { id: `template3-${Date.now()}`, name: "Template3", component: Template3 },
+  { id: `template4-${Date.now()}`, name: "Template4", component: Template4 },
+  { id: `template5-${Date.now()}`, name: "Template5", component: Template5 },
+
 ];
 
 export const adminIds = ["118325228783667473835", "96016655"];
