@@ -514,16 +514,16 @@ const Template1 = () => {
             </div>
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-          <div className="col-span-4 bg-black pt-2">
+          <div className="col-span-4 bg-[#FFD700] p-4 flex flex-col items-center space-y-6">
               <div className="w-full h-80 flex items-center justify-center">
                 {!imageAsset.imageURL ? (
                   <React.Fragment>
                     <label className=" w-full cursor-pointer h-full">
                       <div className="w-full flex flex-col items-center justify-center h-full">
-                        <div className="w-full flex flex-col justify-center items-center cursor-pointer">
+                      <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
                           <img
                             src={TemplateOne}
-                            className="rounded-full w-32 h-32 object-cover"
+                            className="object-cover w-full h-full"
                             alt=""
                           />
                         </div>
@@ -540,11 +540,11 @@ const Template1 = () => {
                     </label>
                   </React.Fragment>
                 ) : (
-                  <div className="relative w-32 h-32 rounded-full overflow-hidden">
+                  <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <img
                       src={imageAsset.imageURL}
                       alt="uploaded image"
-                      className="w-full h-full object-cover"
+                      className="object-cover w-full h-full"
                       loading="lazy"
                     />
 
