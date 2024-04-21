@@ -146,7 +146,7 @@ const CreateTemplate = () => {
   const deleteImageObject = () => {
     const deleteRef = ref(storage, imageAsset.imageURL);
     deleteObject(deleteRef).then(() => {
-      toast.success("Image removed from the cloud");
+      toast.success("Image removed");
       setImageAsset((prevAsset) => ({
         ...prevAsset,
         progress: 0,
@@ -160,7 +160,7 @@ const CreateTemplate = () => {
     console.log(template);
     const deleteRef = ref(storage, template.imageURL);
     await deleteObject(deleteRef).then(() => {
-      toast.success("Image removed from the cloud");
+      toast.success("Template removed");
     });
 
     await deleteDoc(doc(db, "templates", template._id))
@@ -262,9 +262,9 @@ const CreateTemplate = () => {
 
         {/* tags */}
         <div className="w-full flex items-center flex-wrap gap-2">
-          {initialTags.map((tag) => (
+          {initialTags.map((tag, i) => (
             <div
-              key={tag}
+              key={i}
               onClick={() => handleTagClick(tag)}
               className={` border  border-gray-300 px-2 py-1 rounded-md cursor-pointer ${
                 selectedTags.includes(tag) ? "bg-blue-500 text-white" : ""

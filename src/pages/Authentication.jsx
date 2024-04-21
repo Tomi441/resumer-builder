@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Logo } from "../assets";
-import { FaChevronRight, FaGithub, FaGoogle } from "react-icons/fa6";
+import { FaChevronRight, FaGithub, FaGoogle, FaEnvelope } from "react-icons/fa6";
 import { Footer } from "../containers";
 import { AuthButtonWithProvider, MainSpinner } from "../components";
 import useUser from "../hooks/useUser";
@@ -30,7 +30,7 @@ const Authentication = () => {
           Welcome to Easy Res
         </p>
         <p className="text-base text-txtPrimary">
-          express way to create resume
+          An express way to create resumes
         </p>
         <p className="text-2xl text-gray-600">Login</p>
 
@@ -46,6 +46,9 @@ const Authentication = () => {
             label={"Signin with GitHub"}
             provider={"GitHubAuthProvider"}
           />
+
+       
+          
         </div>
       </div>
       {/* footer */}

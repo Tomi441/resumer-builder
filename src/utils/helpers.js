@@ -1,5 +1,5 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
-import { Template1, Template2 } from "../designs";
+import { Template1, Template2, Template3, Template4, Template5 } from "../designs";
 import { toast } from "react-toastify";
 import { db } from "../config/firebase.config";
 
@@ -20,26 +20,30 @@ export const FiltersData = [
   {
     id: "14",
     label: "Customer Service Representative",
-    value: "customer_service_representative",
+    value: "Customer Service Representative",
   },
-  { id: "15", label: "HR Manager", value: "hr_manager" },
-  { id: "16", label: "Financial Analyst", value: "financial_analyst" },
-  { id: "17", label: "Content Writer", value: "content_writer" },
-  { id: "18", label: "Teacher/Educator", value: "teacher_educator" },
+  { id: "15", label: "HR Manager", value: "HR Manager" },
+  { id: "16", label: "Financial Analyst", value: "Financial Analyst" },
+  { id: "17", label: "Content Writer", value: "Content Writer" },
+  { id: "18", label: "Teacher/Educator", value: "Teacher/Educator" },
   {
     id: "19",
     label: "Healthcare Professional",
-    value: "healthcare_professional",
+    value: "Healthcare Professional",
   },
-  { id: "20", label: "Legal Counsel", value: "legal_counsel" },
+  { id: "20", label: "Legal Counsel", value: "Legal Counsel" },
 ];
 
 export const TemplatesData = [
   { id: `template1-${Date.now()}`, name: "Template1", component: Template1 },
   { id: `template2-${Date.now()}`, name: "Template2", component: Template2 },
+  { id: `template3-${Date.now()}`, name: "Template3", component: Template3 },
+  { id: `template4-${Date.now()}`, name: "Template4", component: Template4 },
+  { id: `template5-${Date.now()}`, name: "Template5", component: Template5 },
+
 ];
 
-export const adminIds = ["116066160874334281494", "25000924"];
+export const adminIds = ["118325228783667473835", "96016655"];
 
 export const initialTags = [
   "Software Engineer",

@@ -37,7 +37,7 @@ import {
 } from "firebase/storage";
 import { PuffLoader } from "react-spinners";
 
-const Template1 = () => {
+const Template4 = () => {
   const { pathname } = useLocation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -464,7 +464,7 @@ const Template1 = () => {
           className="text-txtPrimary cursor-pointer"
           onClick={() => navigate(-1)}
         >
-          / Template1 /
+          / Template4 /
         </p>
         <p>Edit</p>
       </div>
@@ -514,52 +514,10 @@ const Template1 = () => {
             </div>
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-          <div className="col-span-4 bg-[#FFD700] p-4 flex flex-col items-center space-y-6">
-              <div className="w-full h-80 flex items-center justify-center">
-                {!imageAsset.imageURL ? (
-                  <React.Fragment>
-                    <label className=" w-full cursor-pointer h-full">
-                      <div className="w-full flex flex-col items-center justify-center h-full">
-                      <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                          <img
-                            src={TemplateOne}
-                            className="object-cover w-full h-full"
-                            alt=""
-                          />
-                        </div>
-                      </div>
+            <div className="col-span-4 bg-black flex flex-col items-center justify-start">
+              
+{/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
 
-                      {isEdit && (
-                        <input
-                          type="file"
-                          className="w-0 h-0"
-                          accept=".jpeg,.jpg,.png"
-                          onChange={handleFileSelect}
-                        />
-                      )}
-                    </label>
-                  </React.Fragment>
-                ) : (
-                  <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                    <img
-                      src={imageAsset.imageURL}
-                      alt="uploaded image"
-                      className="object-cover w-full h-full"
-                      loading="lazy"
-                    />
-
-                    {isEdit && (
-                      <div
-                        className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500 cursor-pointer"
-                        onClick={deleteImageObject}
-                      >
-                        <FaTrash className="text-sm text-white" />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-              {/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
               <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
                 <div className="w-full">
                   <p className="uppercase text-lg font-semibold text-gray-100">
@@ -995,4 +953,4 @@ const Template1 = () => {
   );
 };
 
-export default Template1;
+export default Template4;

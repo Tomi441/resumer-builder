@@ -11,6 +11,7 @@ import { auth } from "../config/firebase.config";
 const AuthButtonWithProvider = ({ Icon, label, provider }) => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+
   const handleClick = async () => {
     switch (provider) {
       case "GitHubAuthProvider":
@@ -33,6 +34,9 @@ const AuthButtonWithProvider = ({ Icon, label, provider }) => {
           });
 
         break;
+
+  
+        
     }
   };
 

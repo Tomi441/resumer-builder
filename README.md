@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Getting Started with Resume Builder React App
 
 This project was bootstrapped with [Create React App](https://github.com/Tomi441/resume-builder).
+
+## Dependencies that need to be installed are as followed
+yarn
+
 
 ## Available Scripts
 
