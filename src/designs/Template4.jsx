@@ -36,10 +36,7 @@ const Template4 = () => {
   const [isEdit, setIsEdit] = useState(false);
   const { data: user } = useUser();
   const resumeRef = useRef(null);
-  const [imageAsset, setImageAsset] = useState({
-    isImageLoading: false,
-    imageURL: null,
-  });
+
   const {
     data: resumeData,
     isLoading: resume_isLoading,
@@ -234,12 +231,6 @@ const Template4 = () => {
     }
     if (resumeData?.projects) {
       setProjects(resumeData?.projects);
-    }
-    if (resumeData?.userProfilePic) {
-      setImageAsset((prevAsset) => ({
-        ...prevAsset,
-        imageURL: resumeData?.userProfilePic,
-      }));
     }
   }, [resumeData]);
 
@@ -501,7 +492,7 @@ const Template4 = () => {
   const saveFormData = async () => {
     const timeStamp = serverTimestamp();
     const resume_id = `${templateName}-${user?.uid}`;
-    const imageURL = await getImage();
+    
     const _doc = {
       _id: loadedTemplateId,
       resume_id,
@@ -517,8 +508,6 @@ const Template4 = () => {
       experiences,
       skills,
       timeStamp,
-      userProfilePic: imageAsset.imageURL,
-      imageURL,
     };
     console.log(_doc);
     setDoc(doc(db, "users", user?.uid, "resumes", resume_id), _doc)
