@@ -501,7 +501,7 @@ const Template1 = () => {
         <div className="col-span-12 px-4 py-6">
           <div className="flex items-center justify-end w-full gap-12 mb-4">
             <div
-              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-200 cursor-pointer"
+              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-100 cursor-pointer"
               onClick={toggleEditable}
             >
               {isEdit ? (
@@ -513,7 +513,7 @@ const Template1 = () => {
             </div>
 
             <div
-              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-200 cursor-pointer"
+              className="flex items-center justify-center gap-1 px-3 py-1 rounded-md bg-gray-100 cursor-pointer"
               onClick={saveFormData}
             >
               <BiSolidBookmarks className="text-sm text-txtPrimary" />
@@ -607,7 +607,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                     <input
@@ -617,7 +617,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 text-gray-200 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                   </div>
@@ -634,7 +634,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                     <input
@@ -644,7 +644,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 text-gray-200 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                   </div>
@@ -657,7 +657,7 @@ const Template1 = () => {
                   <textarea
                     readOnly="true"
                     className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
-                      isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                      isEdit ? "bg-[#3E3D3F]" : "bg-transparent"
                     }`}
                     name="address"
                     value={formData.address}
@@ -690,7 +690,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-gray-100 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -701,7 +701,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -712,7 +712,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -723,7 +723,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                   </div>
@@ -736,7 +736,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-gray-100 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -747,7 +747,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -758,7 +758,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
 
@@ -769,7 +769,7 @@ const Template1 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#3E3D3F]"
                       }`}
                     />
                   </div>
@@ -806,7 +806,7 @@ const Template1 = () => {
                             <textarea
                               readOnly="true"
                               className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
-                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                                isEdit ? "bg-[#3E3D3F]" : "bg-transparent"
                               }`}
                               name="degree"
                               value={edu.degree}
@@ -927,7 +927,7 @@ const Template1 = () => {
                   <textarea
                     readOnly="true"
                     className={`text-base mt-[3%] text-[#777777] tracking-wider w-full  outline-none border-none ${
-                      isEdit ? "bg-gray-200" : "bg-transparent"
+                      isEdit ? "bg-gray-100" : "bg-transparent"
                     }`}
                     name="personalDescription"
                     value={formData.personalDescription}
@@ -979,7 +979,7 @@ const Template1 = () => {
                                 type="text"
                                 readOnly="true"
                                 className={` outline-none border-none font-sans font-semibold text-lg tracking-wide capitalize text-black w-full ${
-                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                  isEdit ? "bg-gray-100" : "bg-transparent"
                                 }`}
                               />
 
@@ -990,14 +990,14 @@ const Template1 = () => {
                                 type="text"
                                 readOnly="true"
                                 className={` outline-none border-none text-sm tracking-wide capitalize text-txtPrimary w-full ${
-                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                  isEdit ? "bg-gray-100" : "bg-transparent"
                                 }`}
                               />
 
                               <textarea
                                 readOnly="true"
                                 className={`text-xs mt-4  text-txtPrimary tracking-wider w-full  outline-none border-none ${
-                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                  isEdit ? "bg-gray-100" : "bg-transparent"
                                 }`}
                                 name="description"
                                 value={exp.description}
@@ -1019,7 +1019,7 @@ const Template1 = () => {
                                 type="text"
                                 readOnly="true"
                                 className={` outline-none border-none text-[12px] text-base tracking-eide uppercase text-black w-full ${
-                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                  isEdit ? "bg-gray-100" : "bg-transparent"
                                 }`}
                               />
                             </div>
@@ -1068,7 +1068,7 @@ const Template1 = () => {
                                   type="text"
                                   readOnly="true"
                                   className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
-                                    isEdit ? "bg-gray-200" : "bg-transparent"
+                                    isEdit ? "bg-gray-100" : "bg-transparent"
                                   }`}
                                 />
 
@@ -1082,7 +1082,7 @@ const Template1 = () => {
                                       type="text"
                                       className={` outline-none border-none text-base tracking-wide capitalize font-semibold text-txtPrimary w-full ${
                                         isEdit
-                                          ? "bg-gray-200"
+                                          ? "bg-gray-100"
                                           : "bg-transparent"
                                       }`}
                                     />
