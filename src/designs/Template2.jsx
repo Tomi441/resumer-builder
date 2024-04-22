@@ -702,7 +702,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
                   </div>
@@ -719,7 +719,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
                   </div>
@@ -732,7 +732,7 @@ const Template2 = () => {
                   <textarea
                     readOnly="true"
                     className={`text-xs text-black mt-2 px-3  w-full  outline-none border-none ${
-                      isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                      isEdit ? "bg-[#E2F5F5]" : "bg-transparent"
                     }`}
                     name="address"
                     value={formData.address}
@@ -778,7 +778,7 @@ const Template2 = () => {
                             <textarea
                               readOnly="true"
                               className={`text-xs text-black mt-2  w-full  outline-none border-none ${
-                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                                isEdit ? "bg-[#E2F5F5]" : "bg-transparent"
                               }`}
                               name="degree"
                               value={edu.degree}
@@ -848,7 +848,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -859,7 +859,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -870,7 +870,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -881,7 +881,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
                   </div>
@@ -894,7 +894,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -905,7 +905,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -916,7 +916,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
 
@@ -927,7 +927,7 @@ const Template2 = () => {
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs capitalize text-black w-full ${
-                        isEdit && "bg-[#1c1c1c]"
+                        isEdit && "bg-[#E2F5F5]"
                       }`}
                     />
                   </div>

@@ -756,7 +756,7 @@ const Template5 = () => {
                     type="text"
                     readOnly="true"
                     className={`bg-transparent w-[100%] outline-none text-center border-none text-[16px] font-semibold px-3 text-black ${
-                      isEdit && "bg-[#1c1c1c]"
+                      isEdit && "bg-gray-200"
                     }`}
                   />
                   <input
@@ -766,7 +766,7 @@ const Template5 = () => {
                     type="text"
                     readOnly="true"
                     className={`bg-transparent w-[100%] text-center outline-none border-none text-[16px] font-semibold px-3 mt-2 text-black ${
-                      isEdit && "bg-[#1c1c1c]"
+                      isEdit && "bg-gray-200"
                     }`}
                   />
 
@@ -777,7 +777,7 @@ const Template5 = () => {
                     type="text"
                     readOnly="true"
                     className={`bg-transparent outline-none text-center border-none text-[16px] font-semibold px-3 mt-2 text-black w-[100%] ${
-                      isEdit && "bg-[#1c1c1c]"
+                      isEdit && "bg-gray-200"
                     }`}
                   />
                 </div>
@@ -944,7 +944,7 @@ const Template5 = () => {
                             <textarea
                               readOnly="true"
                               className={`text-xs text-black mt-2  w-full  outline-none border-none ${
-                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                                isEdit ? "bg-gray-200" : "bg-transparent"
                               }`}
                               name="university"
                               value={edu.year}
@@ -998,7 +998,7 @@ const Template5 = () => {
                         type="text"
                         readOnly="true"
                         className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
-                          isEdit && "bg-[#1c1c1c]"
+                          isEdit && "bg-gray-200"
                         }`}
                       />
 
@@ -1009,7 +1009,7 @@ const Template5 = () => {
                         type="text"
                         readOnly="true"
                         className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                          isEdit && "bg-[#1c1c1c]"
+                          isEdit && "bg-gray-200"
                         }`}
                       />
                     </div>
@@ -1056,7 +1056,7 @@ const Template5 = () => {
                             <textarea
                               readOnly="true"
                               className={`text-xs text-black mt-2  w-full  outline-none border-none ${
-                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                                isEdit ? "bg-gray-200" : "bg-transparent"
                               }`}
                               name="university"
                               value={projects.desc}
@@ -1114,7 +1114,7 @@ const Template5 = () => {
                         type="text"
                         readOnly="true"
                         className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
-                          isEdit && "bg-[#1c1c1c]"
+                          isEdit && "bg-gray-200"
                         }`}
                       />
 
@@ -1125,7 +1125,7 @@ const Template5 = () => {
                         type="text"
                         readOnly="true"
                         className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                          isEdit && "bg-[#1c1c1c]"
+                          isEdit && "bg-gray-200"
                         }`}
                       />
                     </div> */}
