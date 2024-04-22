@@ -2,14 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { TemplateOne } from "../assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  FaFilePdf,
   FaHouse,
   FaPenToSquare,
   FaPencil,
   FaPlus,
   FaTrash,
 } from "react-icons/fa6";
-
 import { BiSolidBookmarks } from "react-icons/bi";
 import {
   BsFiletypeJpg,
@@ -23,19 +21,11 @@ import { FadeInOutWithOpacityAlone, opacityINOut } from "../animations";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
-import { db, storage } from "../config/firebase.config";
+import { db } from "../config/firebase.config";
 import { getTemplateDetailEditByUser } from "../api";
 import MainSpinner from "../components/MainSpinner";
 import jsPDF from "jspdf";
-
 import * as htmlToImage from "html-to-image";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { PuffLoader } from "react-spinners";
 
 const Template3 = () => {
   const { pathname } = useLocation();
@@ -542,8 +532,8 @@ const Template3 = () => {
                 ) : (
                   <div className="relative w-full h-full overflow-hidden rounded-md">
                     <img
+                      alt="uploaded_image"
                       src={imageAsset.imageURL}
-                      alt="uploaded image"
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />

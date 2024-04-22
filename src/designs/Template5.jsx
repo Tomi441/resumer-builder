@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TemplateOne } from "../assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  FaFilePdf,
   FaHouse,
   FaPenToSquare,
   FaPencil,
   FaPlus,
   FaTrash,
 } from "react-icons/fa6";
-
 import { BiSolidBookmarks } from "react-icons/bi";
 import {
   BsFiletypeJpg,
@@ -23,19 +20,11 @@ import { FadeInOutWithOpacityAlone, opacityINOut } from "../animations";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
-import { db, storage } from "../config/firebase.config";
+import { db } from "../config/firebase.config";
 import { getTemplateDetailEditByUser } from "../api";
 import MainSpinner from "../components/MainSpinner";
 import jsPDF from "jspdf";
-
 import * as htmlToImage from "html-to-image";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { PuffLoader } from "react-spinners";
 
 const Template5 = () => {
   const { pathname } = useLocation();
@@ -44,18 +33,13 @@ const Template5 = () => {
   const templateName = pathname?.split("/")?.slice(-1);
   const searchParams = new URLSearchParams(location.search);
   const loadedTemplateId = searchParams.get("templateId");
-  // console.log(pathname, templateName, loadedTemplateId);
-
   const [isEdit, setIsEdit] = useState(false);
   const { data: user } = useUser();
-
   const resumeRef = useRef(null);
-
   const [imageAsset, setImageAsset] = useState({
     isImageLoading: false,
     imageURL: null,
   });
-
   const {
     data: resumeData,
     isLoading: resume_isLoading,
@@ -66,36 +50,37 @@ const Template5 = () => {
   );
 
   const [formData, setFormData] = useState({
-    fullname: "Karen Richards",
-    professionalTitle: "Professional Title",
+    fullname: "Jone Don",
     personalDescription: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?`,
     refererName: "Sara Taylore",
     refererRole: "Director | Company Name",
     mobile: "+91 0000-0000",
-    email: "urname@gmail.com",
-    website: "urwebsite.com",
+    email: "yourname@gmail.com",
+    github: "github.com/jonedon",
+    linkedIn: "linkedin.com/jonedon",
+    website: "yourwebsite.com",
     address: "your street address, ss, street, city/zip code - 1234",
   });
 
   const [experiences, setExperiences] = useState([
     {
-      year: "2012 - 2014",
-      title: "Job Position Here",
-      companyAndLocation: "Company Name / Location here",
+      year: "Month 20XX - Present Location",
+      title: "Job Role",
+      companyAndLocation: "Company Name",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
     },
     {
-      year: "2012 - 2014",
-      title: "Job Position Here",
-      companyAndLocation: "Company Name / Location here",
+      year: "Month 20XX - Present Location",
+      title: "Job Role",
+      companyAndLocation: "Company Name",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
     },
     {
-      year: "2012 - 2014",
-      title: "Job Position Here",
-      companyAndLocation: "Company Name / Location here",
+      year: "Month 20XX - Present Location",
+      title: "Job Role",
+      companyAndLocation: "Company Name",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus minima tenetur nostrum quo aliquam dolorum incidunt.",
     },
@@ -122,12 +107,97 @@ const Template5 = () => {
       title: "skill5",
       percentage: "75",
     },
+    {
+      title: "skill6",
+      percentage: "75",
+    },
   ]);
 
   const [education, setEducation] = useState([
     {
-      major: "ENTER YOUR MAJOR",
-      university: "Name of your university / college 2005-2009",
+      major: "Degree Name (Department)",
+      university: "University Name",
+      year: "Month 20XX - Month 20xx, location",
+    },
+    {
+      major: "Degree Name (Department)",
+      university: "University Name",
+      year: "Month 20XX - Month 20xx, location",
+    },
+  ]);
+
+  const [extra, setExtra] = useState([
+    {
+      award: "Award",
+      desc: "Lorem impsum award",
+      year: "Month 20XX",
+      desc2: "Lorem impsum award",
+      year2: "Month 20XX",
+    },
+  ]);
+
+  const [certificate, setCertificate] = useState([
+    {
+      name: "Course Name",
+      url: "URL: www.certificate.com",
+      year: "Month 20XX",
+    },
+    {
+      name: "Course Name",
+      url: "URL: www.certificate.com",
+      year: "Month 20XX",
+    },
+  ]);
+
+  const [achieve, setAchieve] = useState([
+    {
+      achieve: "Achievements",
+      desc: "Achievements",
+      year: "Month 20XX",
+      desc2: "Achievements",
+      year2: "Month 20XX",
+    },
+  ]);
+
+  const [volunteer, setVolunteer] = useState([
+    {
+      volunteer: "Volunteer Work",
+      desc: "Organization",
+      year: "Month 20XX",
+      desc2: "Organization",
+      year2: "Month 20XX",
+    },
+  ]);
+
+  const [projects, setProjects] = useState([
+    {
+      projectName: "Project Name",
+      desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?",
+      year: "Month 20XX - Month 20xx, location",
+    },
+  ]);
+
+  const [language, setLanguage] = useState([
+    {
+      title: "language 1 (Native)",
+    },
+    {
+      title: "language 2 (Proficient)",
+    },
+    {
+      title: "language 3",
+    },
+  ]);
+
+  const [hobbies, setHobbies] = useState([
+    {
+      title: "Hobby 1",
+    },
+    {
+      title: "Hobby 2",
+    },
+    {
+      title: "Hobby 3",
     },
   ]);
 
@@ -143,6 +213,27 @@ const Template5 = () => {
     }
     if (resumeData?.education) {
       setEducation(resumeData?.education);
+    }
+    if (resumeData?.extra) {
+      setExtra(resumeData?.extra);
+    }
+    if (resumeData?.achieve) {
+      setAchieve(resumeData?.achieve);
+    }
+    if (resumeData?.certificate) {
+      setCertificate(resumeData?.certificate);
+    }
+    if (resumeData?.volunteer) {
+      setVolunteer(resumeData?.volunteer);
+    }
+    if (resumeData?.language) {
+      setLanguage(resumeData?.language);
+    }
+    if (resumeData?.hobbies) {
+      setHobbies(resumeData?.hobbies);
+    }
+    if (resumeData?.projects) {
+      setProjects(resumeData?.projects);
     }
     if (resumeData?.userProfilePic) {
       setImageAsset((prevAsset) => ({
@@ -173,47 +264,6 @@ const Template5 = () => {
       textarea[i].readOnly = !textarea[i].readOnly;
     }
   };
-
-  // image upload to the cloud
-  const handleFileSelect = async (event) => {
-    setImageAsset((prevAsset) => ({ ...prevAsset, isImageLoading: true }));
-    // console.log(event.target.files[0]);
-    const file = event.target.files[0];
-    if (file && isAllowed(file)) {
-      const reader = new FileReader();
-
-      reader.onload = function (event) {
-        const dataURL = event.target.result;
-        console.log("Data URL:", dataURL);
-
-        // You can now use the dataURL as needed, e.g., to display an image.
-        setImageAsset((prevAsset) => ({
-          ...prevAsset,
-          imageURL: dataURL,
-        }));
-      };
-
-      // Read the file as a Data URL
-      reader.readAsDataURL(file);
-    } else {
-      toast.error("Invalid File Format");
-    }
-  };
-
-  const isAllowed = (file) => {
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-    return allowedTypes.includes(file.type);
-  };
-
-  // delete an image
-  const deleteImageObject = () => {
-    setImageAsset((prevAsset) => ({
-      ...prevAsset,
-      imageURL: null,
-    }));
-  };
-
-  // uploader finshed
 
   const handleExpChange = (index, e) => {
     const { name, value } = e.target;
@@ -256,10 +306,62 @@ const Template5 = () => {
     setSkills(updatedSkills);
   };
 
+  const handleCertificateChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedCertificate = [...certificate];
+    updatedCertificate[index][name] = value;
+    setCertificate(updatedCertificate);
+  };
+
+  const handleLanguageChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedLanguage = [...language];
+    updatedLanguage[index][name] = value;
+    setLanguage(updatedLanguage);
+  };
+
+  const handleAchieveChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedAchieve = [...achieve];
+    updatedAchieve[index][name] = value;
+    setAchieve(updatedAchieve);
+  };
+
+  const handleVolunteerChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedVolunteer = [...volunteer];
+    updatedVolunteer[index][name] = value;
+    setVolunteer(updatedVolunteer);
+  };
+
   const removeSkill = (index) => {
     const updatedSkills = [...skills];
     updatedSkills.splice(index, 1);
     setSkills(updatedSkills);
+  };
+
+  const removeCertificate = (index) => {
+    const updatedCertificate = [...certificate];
+    updatedCertificate.splice(index, 1);
+    setCertificate(updatedCertificate);
+  };
+
+  const removeLanguage = (index) => {
+    const updatedLanguage = [...language];
+    updatedLanguage.splice(index, 1);
+    setLanguage(updatedLanguage);
+  };
+
+  const removeAchieve = (index) => {
+    const updatedAchieve = [...achieve];
+    updatedAchieve.splice(index, 1);
+    setAchieve(updatedAchieve);
+  };
+
+  const removeVolunteer = (index) => {
+    const updatedVolunteer = [...volunteer];
+    updatedVolunteer.splice(index, 1);
+    setVolunteer(updatedVolunteer);
   };
 
   const addSkill = () => {
@@ -273,6 +375,56 @@ const Template5 = () => {
     setSkills(updatedSkills);
   };
 
+  const addCertificate = () => {
+    const updatedCertificate = [
+      ...certificate,
+      {
+        name: "Course Name",
+        url: "URL: www.certificate.com",
+        year: "Month 20XX",
+      },
+    ];
+    setCertificate(updatedCertificate);
+  };
+
+  const addLanguage = () => {
+    const updatedLanguage = [
+      ...language,
+      {
+        title: "language",
+      },
+    ];
+    setLanguage(updatedLanguage);
+  };
+
+  const addAchieve = () => {
+    const updatedAchieve = [
+      ...achieve,
+      {
+        achieve: "Achievements",
+        desc: "Achievements",
+        year: "Month 20XX",
+        desc2: "Achievements",
+        year2: "Month 20XX",
+      },
+    ];
+    setAchieve(updatedAchieve);
+  };
+
+  const addVolunteer = () => {
+    const updatedVolunteer = [
+      ...volunteer,
+      {
+        volunteer: "Volunteer Work",
+        desc: "Organization",
+        year: "Month 20XX",
+        desc2: "Organization",
+        year2: "Month 20XX",
+      },
+    ];
+    setVolunteer(updatedVolunteer);
+  };
+
   const handleEducationChange = (index, e) => {
     const { name, value } = e.target;
     const updatedEdu = [...education];
@@ -280,10 +432,36 @@ const Template5 = () => {
     setEducation(updatedEdu);
   };
 
+  const handleExtraChnage = (index, e) => {
+    const { name, value } = e.target;
+    const updatedExtra = [...education];
+    updatedExtra[index][name] = value;
+    setExtra(updatedExtra);
+  };
+
+  const handleProjectChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedProjects = [...projects];
+    updatedProjects[index][name] = value;
+    setProjects(updatedProjects);
+  };
+
   const removeEducation = (index) => {
     const updatedEdu = [...education];
     updatedEdu.splice(index, 1);
     setEducation(updatedEdu);
+  };
+
+  const removeExtra = (index) => {
+    const updatedExtra = [...extra];
+    updatedExtra.splice(index, 1);
+    setExtra(updatedExtra);
+  };
+
+  const removeProjects = (index) => {
+    const updatedProjects = [...projects];
+    updatedProjects.splice(index, 1);
+    setProjects(updatedProjects);
   };
 
   const addEducation = () => {
@@ -297,6 +475,29 @@ const Template5 = () => {
     setEducation(updatedEdu);
   };
 
+  const addExtra = () => {
+    const updatedExtra = [
+      ...extra,
+      {
+        major: "ENTER YOUR MAJOR",
+        university: "Name of your university / college 2005-2009",
+      },
+    ];
+    setExtra(updatedExtra);
+  };
+
+  const addProjects = () => {
+    const updatedProjects = [
+      ...projects,
+      {
+        projectName: "Project Name",
+        desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?",
+        year: "Month 20XX - Month 20xx, location",
+      },
+    ];
+    setProjects(updatedProjects);
+  };
+
   const saveFormData = async () => {
     const timeStamp = serverTimestamp();
     const resume_id = `${templateName}-${user?.uid}`;
@@ -306,6 +507,13 @@ const Template5 = () => {
       resume_id,
       formData,
       education,
+      projects,
+      language,
+      hobbies,
+      extra,
+      volunteer,
+      certificate,
+      achieve,
       experiences,
       skills,
       timeStamp,
@@ -513,57 +721,418 @@ const Template5 = () => {
               />
             </div>
           </div>
-          <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-            <div className="col-span-4 bg-black flex flex-col items-center justify-start">
-              
-{/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
 
-<div className="container mx-auto px-8 py-4" ref={resumeRef}>
-      {/* Header Section */}
-      <div className="border-b-2 pb-2 mb-4">
-        <h1 className="text-3xl font-bold uppercase">{formData.fullname}</h1>
-        <h2 className="text-xl">{formData.professionalTitle}</h2>
-      </div>
+          <div
+            className="w-full justify-center items-center h-auto flex bg-white"
+            ref={resumeRef}
+          >
+            <div className="flex flex-col w-[100%] items-center justify-center py-6 bg-white">
+              <div className="w-full py-6"></div>
+              {/* title */}
+              <div className="w-full px-8 py-6 bg-[#ffffff]">
+                <div className="flex w-[100%] items-center justify-start ">
+                  <input
+                    type="text"
+                    readOnly="true"
+                    name="fullname"
+                    value={formData.fullname}
+                    onChange={handleChange}
+                    className={`bg-transparent w-[100%] outline-none text-center border-none text-3xl font-sans uppercase tracking-wider text-black font-semibold ${
+                      isEdit && "text-white w-full"
+                    }`}
+                  />
+                </div>
+                <div className="w-full h-[1px] bg-black my-3"></div>
+              </div>
 
-      {/* Professional Experience Section */}
-      <div>
-        <h3 className="text-2xl font-bold uppercase mb-3">Professional Experience</h3>
-        {experiences.map((exp, index) => (
-          <div key={index} className="mb-4">
-            {/* Experience Entries */}
-            {/* Editable inputs and delete button with the option to add more entries */}
-          </div>
-        ))}
-        {/* Button to add an experience entry */}
-      </div>
+              {/* email */}
 
-      {/* Education Section */}
-      <div>
-        <h3 className="text-2xl font-bold uppercase mb-3">Education</h3>
-        {education.map((edu, index) => (
-          <div key={index} className="mb-4">
-            {/* Education Entries */}
-            {/* Editable inputs and delete button with the option to add more entries */}
-          </div>
-        ))}
-        {/* Button to add an education entry */}
-      </div>
+              <div className="w-full flex justify-center">
+                <div className="w-[100%]">
+                  <input
+                    value={formData.email}
+                    onChange={handleChange}
+                    name="email"
+                    type="text"
+                    readOnly="true"
+                    className={`bg-transparent w-[100%] outline-none text-center border-none text-[16px] font-semibold px-3 text-black ${
+                      isEdit && "bg-[#1c1c1c]"
+                    }`}
+                  />
+                  <input
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    name="email"
+                    type="text"
+                    readOnly="true"
+                    className={`bg-transparent w-[100%] text-center outline-none border-none text-[16px] font-semibold px-3 mt-2 text-black ${
+                      isEdit && "bg-[#1c1c1c]"
+                    }`}
+                  />
 
-      {/* Skills Section */}
-      <div>
-        <h3 className="text-2xl font-bold uppercase mb-3">Skills</h3>
-        {skills.map((skill, index) => (
-          <div key={index} className="flex justify-between items-center mb-2">
-            {/* Skill Entries */}
-            {/* Editable inputs and delete button with the option to add more entries */}
-          </div>
-        ))}
-        {/* Button to add a skill entry */}
-      </div>
+                  <input
+                    value={formData.linkedIn}
+                    onChange={handleChange}
+                    name="email"
+                    type="text"
+                    readOnly="true"
+                    className={`bg-transparent outline-none text-center border-none text-[16px] font-semibold px-3 mt-2 text-black w-[100%] ${
+                      isEdit && "bg-[#1c1c1c]"
+                    }`}
+                  />
+                </div>
+              </div>
 
-      {/* Additional Sections ... */}
-             </div>
-           </div>
+              {/* about me */}
+              <div className="w-full px-8 py-6 flex flex-col items-start justify-start gap-6">
+                <div className="w-full">
+                  <div className="w-full h-[1px] bg-black my-3"></div>
+                  <textarea
+                    readOnly="true"
+                    className={`text-base text-txtPrimary text-center tracking-wider w-full  outline-none border-none ${
+                      isEdit ? "bg-gray-200" : "bg-transparent"
+                    }`}
+                    name="personalDescription"
+                    value={formData.personalDescription}
+                    onChange={handleChange}
+                    rows="4"
+                    style={{
+                      minHeight: "100px",
+                      width: "100%",
+                      height: "100px",
+                      resize: "none",
+                    }}
+                  />
+                </div>
+
+                {/* experience */}
+                <div className="w-full">
+                  <p className="uppercase text-xl tracking-wider text-black font-semibold">
+                    Professional Experience
+                  </p>
+                  <div className="w-full h-[1px] bg-black my-3"></div>
+                  <div className="w-full flex flex-col items-center justify-start gap-[5px]">
+                    <AnimatePresence>
+                      {experiences &&
+                        experiences?.map((exp, i) => (
+                          <motion.div
+                            {...opacityINOut(i)}
+                            className="w-full flex flex-col"
+                            key={i}
+                          >
+                            <div className="w-[100%]">
+                              <AnimatePresence>
+                                {isEdit && (
+                                  <motion.div
+                                    {...FadeInOutWithOpacityAlone}
+                                    onClick={() => removeExperience(i)}
+                                    className="cursor-pointer absolute right-0 top-2"
+                                  >
+                                    <FaTrash className="text-base text-txtPrimary" />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+
+                              <div className="flex items-center">
+                                <input
+                                  value={exp.title}
+                                  onChange={(e) => handleExpChange(i, e)}
+                                  name="title"
+                                  type="text"
+                                  readOnly="true"
+                                  className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-black border-l-[1px] border-[black] w-[80px] ${
+                                    isEdit ? "bg-gray-200" : "bg-transparent"
+                                  }`}
+                                />
+                                <div className="w-[2px] h-[15px] bg-black my-3"></div>
+                                <input
+                                  value={exp.companyAndLocation}
+                                  onChange={(e) => handleExpChange(i, e)}
+                                  name="companyAndLocation"
+                                  type="text"
+                                  readOnly="true"
+                                  className={` outline-none ml-3 border-none text-xm tracking-wide capitalize text-black w-full ${
+                                    isEdit ? "bg-gray-200" : "bg-transparent"
+                                  }`}
+                                />
+                              </div>
+                              <input
+                                value={exp.year}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="year"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-[12px] tracking-eide uppercase text-black w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                              />
+
+                              <textarea
+                                readOnly="true"
+                                className={`text-[14px] mt-2 text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
+                                name="description"
+                                value={exp.description}
+                                onChange={(e) => handleExpChange(i, e)}
+                                rows="1"
+                                style={{
+                                  maxHeight: "auto",
+                                  minHeight: "50px",
+                                  resize: "none",
+                                }}
+                              />
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                      {isEdit && (
+                        <motion.div
+                          {...FadeInOutWithOpacityAlone}
+                          onClick={addExperience}
+                          className="cursor-pointer"
+                        >
+                          <FaPlus className="text-base text-txtPrimary" />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* education */}
+                <div className="w-full flex flex-col items-center justify-start gap-6">
+                  <div className="w-full">
+                    <p className="uppercase text-lg font-semibold text-black">
+                      Education
+                    </p>
+                    <div className="w-full h-[1px] bg-black mt-2"></div>
+                    <AnimatePresence>
+                      {education &&
+                        education?.map((edu, i) => (
+                          <motion.div
+                            key={i}
+                            {...opacityINOut(i)}
+                            className="w-full mt-3 relative"
+                          >
+                            <div className="flex item-center">
+                              <input
+                                type="text"
+                                readOnly="true"
+                                name="major"
+                                value={edu.major}
+                                onChange={(e) => handleEducationChange(i, e)}
+                                className={`bg-transparent outline-none border-none text-sm font-semibold w-[41%] uppercase text-black  ${
+                                  isEdit && "text-black w-[45%]"
+                                }`}
+                              />
+
+                              <div className="w-[1px] h-[15px] bg-black mr-3"></div>
+
+                              <input
+                                type="text"
+                                readOnly="true"
+                                name="major"
+                                value={edu.university}
+                                onChange={(e) => handleEducationChange(i, e)}
+                                className={`bg-transparent outline-none border-none text-sm font-semibold w-[50%] text-slate-500  ${
+                                  isEdit && "text-black w-[45%]"
+                                }`}
+                              />
+                            </div>
+
+                            <textarea
+                              readOnly="true"
+                              className={`text-xs text-black mt-2  w-full  outline-none border-none ${
+                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                              }`}
+                              name="university"
+                              value={edu.year}
+                              onChange={(e) => handleEducationChange(i, e)}
+                              rows="2"
+                              style={{
+                                maxHeight: "auto",
+                                minHeight: "30px",
+                                resize: "none",
+                              }}
+                            />
+                            <AnimatePresence>
+                              {isEdit && (
+                                <motion.div
+                                  {...FadeInOutWithOpacityAlone}
+                                  onClick={() => removeEducation(i)}
+                                  className="cursor-pointer absolute right-2 top-0"
+                                >
+                                  <FaTrash className="text-sm text-gray-100" />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+
+                  <AnimatePresence>
+                    {isEdit && (
+                      <motion.div
+                        {...FadeInOutWithOpacityAlone}
+                        onClick={addEducation}
+                        className="cursor-pointer"
+                      >
+                        <FaPlus className="text-base text-gray-100" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* reference */}
+                  {/* <div className="w-full">
+                    <p className="uppercase text-lg font-semibold text-gray-100">
+                      Reference
+                    </p>
+                    <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
+                    <div className="w-full pl-4 mt-3">
+                      <input
+                        value={formData.refererName}
+                        onChange={handleChange}
+                        name="refererName"
+                        type="text"
+                        readOnly="true"
+                        className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                          isEdit && "bg-[#1c1c1c]"
+                        }`}
+                      />
+
+                      <input
+                        value={formData.refererRole}
+                        onChange={handleChange}
+                        name="refererRole"
+                        type="text"
+                        readOnly="true"
+                        className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                          isEdit && "bg-[#1c1c1c]"
+                        }`}
+                      />
+                    </div>
+                  </div> */}
+                </div>
+
+                {/* Projects */}
+                <div className="w-full flex flex-col items-center justify-start gap-6">
+                  <div className="w-full">
+                    <p className="uppercase text-lg font-semibold text-black">
+                      Project
+                    </p>
+                    <div className="w-full h-[1px] bg-black mt-2"></div>
+                    <AnimatePresence>
+                      {projects &&
+                        projects?.map((projects, i) => (
+                          <motion.div
+                            key={i}
+                            {...opacityINOut(i)}
+                            className="w-full mt-3 relative"
+                          >
+                            <input
+                              type="text"
+                              readOnly="true"
+                              name="major"
+                              value={projects.projectName}
+                              onChange={(e) => handleProjectChange(i, e)}
+                              className={`bg-transparent outline-none border-none text-sm font-semibold w-[41%] uppercase text-black  ${
+                                isEdit && "text-black w-[45%]"
+                              }`}
+                            />
+                            <br />
+                            <input
+                              type="text"
+                              readOnly="true"
+                              name="major"
+                              value={projects.year}
+                              onChange={(e) => handleProjectChange(i, e)}
+                              className={`bg-transparent outline-none border-none text-sm font-semibold w-[50%] text-slate-500  ${
+                                isEdit && "text-black w-[45%]"
+                              }`}
+                            />
+
+                            <textarea
+                              readOnly="true"
+                              className={`text-xs text-black mt-2  w-full  outline-none border-none ${
+                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                              }`}
+                              name="university"
+                              value={projects.desc}
+                              onChange={(e) => handleProjectChange(i, e)}
+                              rows="2"
+                              style={{
+                                maxHeight: "auto",
+                                minHeight: "30px",
+                                resize: "none",
+                              }}
+                            />
+                            <AnimatePresence>
+                              {isEdit && (
+                                <motion.div
+                                  {...FadeInOutWithOpacityAlone}
+                                  onClick={() => removeProjects(i)}
+                                  className="cursor-pointer absolute right-2 top-0"
+                                >
+                                  <FaTrash className="text-sm text-gray-100" />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+
+                  <AnimatePresence>
+                    {isEdit && (
+                      <motion.div
+                        {...FadeInOutWithOpacityAlone}
+                        onClick={addProjects}
+                        className="cursor-pointer"
+                      >
+                        <FaPlus className="text-base text-gray-100" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* reference */}
+                  <div className="w-full">
+                    <p className="uppercase text-lg font-semibold text-black">
+                      Reference{" "}
+                      <span className="text-black text-[14px] capitalize">
+                        {" "}
+                        - Reference available upon request
+                      </span>
+                    </p>
+                    <div className="w-full h-[2px] bg-black mt-2"></div>
+                    {/* <div className="w-full pl-4 mt-3">
+                      <input
+                        value={formData.refererName}
+                        onChange={handleChange}
+                        name="refererName"
+                        type="text"
+                        readOnly="true"
+                        className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                          isEdit && "bg-[#1c1c1c]"
+                        }`}
+                      />
+
+                      <input
+                        value={formData.refererRole}
+                        onChange={handleChange}
+                        name="refererRole"
+                        type="text"
+                        readOnly="true"
+                        className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                          isEdit && "bg-[#1c1c1c]"
+                        }`}
+                      />
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

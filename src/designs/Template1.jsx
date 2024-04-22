@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { TemplateOne } from "../assets";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  FaFilePdf,
+  // FaFilePdf,
   FaHouse,
   FaPenToSquare,
   FaPencil,
@@ -23,19 +23,28 @@ import { FadeInOutWithOpacityAlone, opacityINOut } from "../animations";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
-import { db, storage } from "../config/firebase.config";
+import { db } from "../config/firebase.config";
 import { getTemplateDetailEditByUser } from "../api";
 import MainSpinner from "../components/MainSpinner";
 import jsPDF from "jspdf";
+import userIcon from "../assets/svg/userIcon.svg";
+import usersIcon from "../assets/svg/usersIcon.svg";
+import phoneIcon from "../assets/svg/phoneIcon.svg";
+import globeIcon from "../assets/svg/globeIcon.svg";
+import locationIcon from "../assets/svg/locationIcon.svg";
+import jobIcon from "../assets/svg/jobIcon.svg";
+import chartIcon from "../assets/svg/chartIcon.svg";
+import scholarIcon from "../assets/svg/schorlarIcon.svg";
+// import userIcon from "../assets/svg/userIcon.svg"
 
 import * as htmlToImage from "html-to-image";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { PuffLoader } from "react-spinners";
+// import {
+//   deleteObject,
+//   getDownloadURL,
+//   ref,
+//   uploadBytesResumable,
+// } from "firebase/storage";
+// import { PuffLoader } from "react-spinners";
 
 const Template1 = () => {
   const { pathname } = useLocation();
@@ -66,14 +75,23 @@ const Template1 = () => {
   );
 
   const [formData, setFormData] = useState({
-    fullname: "Karen Richards",
-    professionalTitle: "Professional Title",
+    firstName: "Brian",
+    middleName: "R",
+    lastName: "Daxter",
+    professionalTitle: "GRAPHICS & WEB DESIGNER",
     personalDescription: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alia minus est culpa id corrupti nobis ullam harum, porro veniam facilis, obcaecati nulla magnam beatae quae at eos! Qui, similique laboriosam?`,
-    refererName: "Sara Taylore",
-    refererRole: "Director | Company Name",
-    mobile: "+91 0000-0000",
-    email: "urname@gmail.com",
-    website: "urwebsite.com",
+    refererName: "Darwin B. Magana",
+    refererName2: "Robert J. Belvin",
+    refererAddress: "2813 Shobe Lane Mancos, CO",
+    refererTel: "Tel: +1-970-533-3393",
+    refererEmail: "Email: www.yourwebsite.com",
+    refererAddress2: "2119 FairFax Drive Newwark, NJ",
+    refererTel2: "Tel: +1-908-987-5103",
+    refererEmail2: "Email: www.yourwebsite.com",
+    mobile1: "+1-718-310-5588",
+    mobile2: "+1-313-381-8167",
+    email: "yourname@gmail.com",
+    website: "yourwebsite.com",
     address: "your street address, ss, street, city/zip code - 1234",
   });
 
@@ -126,8 +144,15 @@ const Template1 = () => {
 
   const [education, setEducation] = useState([
     {
-      major: "ENTER YOUR MAJOR",
-      university: "Name of your university / college 2005-2009",
+      university: "STAMFORD UNIVERSITY",
+      degree: "MASTER DEGREE GRADUATE",
+      year: "2011 - 2013",
+    },
+
+    {
+      university: "STAMFORD UNIVERSITY",
+      degree: "MASTER DEGREE GRADUATE",
+      year: "2011 - 2013",
     },
   ]);
 
@@ -152,11 +177,13 @@ const Template1 = () => {
     }
   }, [resumeData]);
 
-  const handleChange = (e) => {
+  const handleChange = (e, fieldName) => {
     const { name, value } = e.target;
+    const nameValue = e.target.textContent;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      [fieldName]: nameValue,
     }));
   };
 
@@ -514,13 +541,13 @@ const Template1 = () => {
             </div>
           </div>
           <div className="w-full h-auto grid grid-cols-12" ref={resumeRef}>
-          <div className="col-span-4 bg-[#FFD700] p-4 flex flex-col items-center space-y-6">
-              <div className="w-full h-80 flex items-center justify-center">
+            <div className="col-span-4 bg-[#353335] p-4 flex flex-col items-center space-y-6">
+              <div className="w-full h-60 flex items-center justify-center">
                 {!imageAsset.imageURL ? (
                   <React.Fragment>
                     <label className=" w-full cursor-pointer h-full">
                       <div className="w-full flex flex-col items-center justify-center h-full">
-                      <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                        <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
                           <img
                             src={TemplateOne}
                             className="object-cover w-full h-full"
@@ -543,7 +570,7 @@ const Template1 = () => {
                   <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
                     <img
                       src={imageAsset.imageURL}
-                      alt="uploaded image"
+                      alt="uploaded_image"
                       className="object-cover w-full h-full"
                       loading="lazy"
                     />
@@ -560,160 +587,46 @@ const Template1 = () => {
                 )}
               </div>
               {/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
-              <div className="w-full flex flex-col items-center justify-start pl-8 mt-4 gap-6">
+              <div className="border-l-[1px] border-[white] w-full flex flex-col items-center justify-start pl-8 mt-4">
                 <div className="w-full">
-                  <p className="uppercase text-lg font-semibold text-gray-100">
-                    Education
-                  </p>
-                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
-                  <AnimatePresence>
-                    {education &&
-                      education?.map((edu, i) => (
-                        <motion.div
-                          key={i}
-                          {...opacityINOut(i)}
-                          className="w-full pl-4 mt-3 relative"
-                        >
-                          <input
-                            type="text"
-                            readOnly="true"
-                            name="major"
-                            value={edu.major}
-                            onChange={(e) => handleEducationChange(i, e)}
-                            className={`bg-transparent outline-none border-none text-sm font-semibold uppercase  text-gray-100  ${
-                              isEdit && "text-yellow-400 w-full"
-                            }`}
-                          />
-
-                          <textarea
-                            readOnly="true"
-                            className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
-                              isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
-                            }`}
-                            name="university"
-                            value={edu.university}
-                            onChange={(e) => handleEducationChange(i, e)}
-                            rows="2"
-                            style={{
-                              maxHeight: "auto",
-                              minHeight: "40px",
-                              resize: "none",
-                            }}
-                          />
-                          <AnimatePresence>
-                            {isEdit && (
-                              <motion.div
-                                {...FadeInOutWithOpacityAlone}
-                                onClick={() => removeEducation(i)}
-                                className="cursor-pointer absolute right-2 top-0"
-                              >
-                                <FaTrash className="text-sm text-gray-100" />
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </motion.div>
-                      ))}
-                  </AnimatePresence>
-                </div>
-
-                <AnimatePresence>
-                  {isEdit && (
-                    <motion.div
-                      {...FadeInOutWithOpacityAlone}
-                      onClick={addEducation}
-                      className="cursor-pointer"
-                    >
-                      <FaPlus className="text-base text-gray-100" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* reference */}
-                <div className="w-full">
-                  <p className="uppercase text-lg font-semibold text-gray-100">
-                    Reference
-                  </p>
-                  <div className="w-full h-[2px] bg-yellow-400 mt-2"></div>
-                  <div className="w-full pl-4 mt-3">
-                    <input
-                      value={formData.refererName}
-                      onChange={handleChange}
-                      name="refererName"
-                      type="text"
-                      readOnly="true"
-                      className={`bg-transparent outline-none border-none text-base tracking-widest capitalize text-gray-100 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
-                      }`}
-                    />
-
-                    <input
-                      value={formData.refererRole}
-                      onChange={handleChange}
-                      name="refererRole"
-                      type="text"
-                      readOnly="true"
-                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
-                        isEdit && "bg-[#1c1c1c]"
-                      }`}
-                    />
+                  <div className="flex">
+                    <img src={userIcon} alt="user" />
+                    <p className="uppercase text-lg font-semibold text-gray-100 ml-2">
+                      Contact Me
+                    </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="w-full flex flex-col items-start justify-start mt-6 gap-6">
-                <div className="w-full grid grid-cols-12">
-                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
-                  <div className="col-span-9">
-                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
-                      <p className="text-sm font-semibold text-gray-200">
-                        Phone
-                      </p>
-                    </div>
+                {/* Phone */}
+                <div className="flex mt-[5%]">
+                  <img src={phoneIcon} alt="user" />
+                  <div>
                     <input
-                      value={formData.mobile}
+                      value={formData.mobile1}
                       onChange={handleChange}
-                      name="mobile"
+                      name="mobile1"
                       type="text"
                       readOnly="true"
                       className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
                     />
-                  </div>
-                </div>
-
-                {/* email */}
-                <div className="w-full grid grid-cols-12">
-                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
-                  <div className="col-span-9">
-                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
-                      <p className="text-sm font-semibold text-gray-200">
-                        Email
-                      </p>
-                    </div>
                     <input
-                      value={formData.email}
+                      value={formData.mobile2}
                       onChange={handleChange}
-                      name="email"
+                      name="mobile2"
                       type="text"
                       readOnly="true"
-                      className={`bg-transparent outline-none border-none text-xs px-3 mt-2 text-gray-200 w-full ${
+                      className={`bg-transparent outline-none border-none text-xs px-3 text-gray-200 w-full ${
                         isEdit && "bg-[#1c1c1c]"
                       }`}
                     />
                   </div>
                 </div>
 
-                {/* website */}
-                <div className="w-full grid grid-cols-12">
-                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
-                  <div className="col-span-9">
-                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
-                      <p className="text-sm font-semibold text-gray-200">
-                        Website
-                      </p>
-                    </div>
-
+                {/* website and Email */}
+                <div className="flex mt-[2%]">
+                  <img src={globeIcon} alt="user" />
+                  <div>
                     <input
                       value={formData.website}
                       onChange={handleChange}
@@ -724,44 +637,261 @@ const Template1 = () => {
                         isEdit && "bg-[#1c1c1c]"
                       }`}
                     />
-                  </div>
-                </div>
-
-                {/* address */}
-                <div className="w-full grid grid-cols-12">
-                  <div className="col-span-3 w-full h-6 bg-yellow-400"></div>
-                  <div className="col-span-9">
-                    <div className="w-full h-6 bg-[rgba(45,45,45,0.6)] px-3 flex items-center">
-                      <p className="text-sm font-semibold text-gray-200">
-                        Address
-                      </p>
-                    </div>
-
-                    <textarea
-                      readOnly="true"
-                      className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
-                        isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
-                      }`}
-                      name="address"
-                      value={formData.address}
+                    <input
+                      value={formData.email}
                       onChange={handleChange}
-                      rows="2"
-                      style={{
-                        maxHeight: "auto",
-                        minHeight: "40px",
-                        resize: "none",
-                      }}
+                      name="email"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs px-3 text-gray-200 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
                     />
                   </div>
                 </div>
+
+                {/* Address */}
+                <div className="flex mt-[2%] w-[100%]">
+                  <img src={locationIcon} alt="user" />
+
+                  <textarea
+                    readOnly="true"
+                    className={`text-xs text-gray-200 mt-2 px-3  w-full  outline-none border-none ${
+                      isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                    }`}
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    rows="2"
+                    style={{
+                      maxHeight: "auto",
+                      minHeight: "40px",
+                      resize: "none",
+                    }}
+                  />
+                </div>
+
+                <div className="col-span-3 w-full border-dashed border-[1px] border-[#ffffff] my-[10%]"></div>
+
+                {/* reference */}
+                <div className="w-full">
+                  <div className="flex">
+                    <img src={usersIcon} alt="" />
+                    <p className="ml-3 uppercase text-lg font-semibold text-gray-100">
+                      Reference
+                    </p>
+                  </div>
+
+                  <div className="w-full mt-3">
+                    <input
+                      value={formData.refererName}
+                      onChange={handleChange}
+                      name="refererName"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererAddress}
+                      onChange={handleChange}
+                      name="refererAddress"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererTel}
+                      onChange={handleChange}
+                      name="referPhone"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererEmail}
+                      onChange={handleChange}
+                      name="refererEmail"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+
+                  <div className="w-full mt-3">
+                    <input
+                      value={formData.refererName2}
+                      onChange={handleChange}
+                      name="refererName"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none font-semibold border-none text-base tracking-widest capitalize text-gray-100 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererAddress2}
+                      onChange={handleChange}
+                      name="refererAddress"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererTel2}
+                      onChange={handleChange}
+                      name="referPhone"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+
+                    <input
+                      value={formData.refererEmail2}
+                      onChange={handleChange}
+                      name="refererEmail"
+                      type="text"
+                      readOnly="true"
+                      className={`bg-transparent outline-none border-none text-xs capitalize text-gray-300 w-full ${
+                        isEdit && "bg-[#1c1c1c]"
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                <div className="col-span-3 w-full border-dashed border-[1px] border-[#ffffff] my-[10%]"></div>
+
+                {/* {Education} */}
+                <div className="w-full flex flex-col items-center justify-start mt-4 gap-6">
+                  <div className="w-full">
+                    <p className="uppercase text-lg font-semibold text-gray-100">
+                      Education
+                    </p>
+
+                    <AnimatePresence>
+                      {education &&
+                        education?.map((edu, i) => (
+                          <motion.div
+                            key={i}
+                            {...opacityINOut(i)}
+                            className="w-full mt-5 relative"
+                          >
+                            <input
+                              type="text"
+                              readOnly="true"
+                              name="university"
+                              value={edu.university}
+                              onChange={(e) => handleEducationChange(i, e)}
+                              className={`bg-transparent outline-none border-none text-sm font-semibold uppercase  text-gray-100  ${
+                                isEdit && "text-yellow-400 w-full"
+                              }`}
+                            />
+
+                            <textarea
+                              readOnly="true"
+                              className={`text-xs text-gray-200 mt-2  w-full  outline-none border-none ${
+                                isEdit ? "bg-[#1c1c1c]" : "bg-transparent"
+                              }`}
+                              name="degree"
+                              value={edu.degree}
+                              onChange={(e) => handleEducationChange(i, e)}
+                              rows="1"
+                              style={{
+                                maxHeight: "auto",
+                                minHeight: "10px",
+                                resize: "none",
+                              }}
+                            />
+                            <input
+                              type="text"
+                              readOnly="true"
+                              name="year"
+                              value={edu.year}
+                              onChange={(e) => handleEducationChange(i, e)}
+                              className={`bg-transparent mt-0 outline-none border-none text-[12px] font-light uppercase  text-gray-100  ${
+                                isEdit && "text-yellow-400 w-full"
+                              }`}
+                            />
+
+                            <AnimatePresence>
+                              {isEdit && (
+                                <motion.div
+                                  {...FadeInOutWithOpacityAlone}
+                                  onClick={() => removeEducation(i)}
+                                  className="cursor-pointer absolute right-2 top-0"
+                                >
+                                  <FaTrash className="text-sm text-gray-100" />
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+
+                  <AnimatePresence>
+                    {isEdit && (
+                      <motion.div
+                        {...FadeInOutWithOpacityAlone}
+                        onClick={addEducation}
+                        className="cursor-pointer"
+                      >
+                        <FaPlus className="text-base text-gray-100" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
+
             <div className="col-span-8 flex flex-col items-center justify-start py-6 bg-white">
               <div className="w-full py-6"></div>
+
               {/* title */}
-              <div className="w-full px-8 py-6 bg-yellow-500">
+              <div className="w-full px-8 py-6 bg-[#F1EFF2]">
                 <div className="flex items-center justify-start ">
-                  <input
+                  <div className="bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider font-extrabold">
+                    <span
+                      contentEditable
+                      onBlur={(e) => handleChange(e, "firstName")}
+                      suppressContentEditableWarning={true}
+                    >
+                      {formData.firstName}
+                    </span>{" "}
+                    <span
+                      contentEditable
+                      onBlur={(e) => handleChange(e, "middleName")}
+                      suppressContentEditableWarning={true}
+                    >
+                      {formData.middleName}
+                    </span>{" "}
+                    <span
+                      className="text-[#E9AE20]"
+                      contentEditable
+                      onBlur={(e) => handleChange(e, "lastName")}
+                      suppressContentEditableWarning={true}
+                    >
+                      {formData.lastName}
+                    </span>
+                  </div>
+
+                  {/* <input
                     type="text"
                     readOnly="true"
                     name="fullname"
@@ -770,7 +900,7 @@ const Template1 = () => {
                     className={`bg-transparent outline-none border-none text-3xl font-sans uppercase tracking-wider text-txtDark font-extrabold ${
                       isEdit && "text-white w-full"
                     }`}
-                  />
+                  /> */}
                 </div>
 
                 <input
@@ -779,7 +909,7 @@ const Template1 = () => {
                   name="professionalTitle"
                   type="text"
                   readOnly="true"
-                  className={`bg-transparent outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
+                  className={`bg-transparent mt-2 outline-none border-none text-xl tracking-widest uppercase text-txtPrimary w-full ${
                     isEdit && "text-white"
                   }`}
                 />
@@ -788,11 +918,15 @@ const Template1 = () => {
               {/* about me */}
               <div className="w-full px-8 py-6 flex flex-col items-start justify-start gap-6">
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">About Me</p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
+                  <div className="flex mt-[5%]">
+                    <img src={scholarIcon} alt="" />
+                    <p className="ml-3 font-semibold uppercase text-xl tracking-wider">
+                      About Me
+                    </p>
+                  </div>
                   <textarea
                     readOnly="true"
-                    className={`text-base text-txtPrimary tracking-wider w-full  outline-none border-none ${
+                    className={`text-base mt-[3%] text-[#777777] tracking-wider w-full  outline-none border-none ${
                       isEdit ? "bg-gray-200" : "bg-transparent"
                     }`}
                     name="personalDescription"
@@ -810,32 +944,23 @@ const Template1 = () => {
 
                 {/* experience */}
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">
-                    Work Experience
-                  </p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
-                  <div className="w-full flex flex-col items-center justify-start gap-4">
+                  <div className="flex">
+                    <img src={jobIcon} alt="" />
+                    <p className="ml-3 uppercase text-xl tracking-wider font-semibold">
+                      Job Experience
+                    </p>
+                  </div>
+
+                  <div className="w-full mt-5 flex flex-col items-center justify-start">
                     <AnimatePresence>
                       {experiences &&
                         experiences?.map((exp, i) => (
                           <motion.div
                             {...opacityINOut(i)}
-                            className="w-full grid grid-cols-12"
+                            className="flex justify-between w-[100%]"
                             key={i}
                           >
-                            <div className="col-span-4">
-                              <input
-                                value={exp.year}
-                                onChange={(e) => handleExpChange(i, e)}
-                                name="year"
-                                type="text"
-                                readOnly="true"
-                                className={` outline-none border-none text-base tracking-eide uppercase text-txtDark w-full ${
-                                  isEdit ? "bg-gray-200" : "bg-transparent"
-                                }`}
-                              />
-                            </div>
-                            <div className="col-span-8 relative">
+                            <div className="w-[85%] relative">
                               <AnimatePresence>
                                 {isEdit && (
                                   <motion.div
@@ -843,7 +968,7 @@ const Template1 = () => {
                                     onClick={() => removeExperience(i)}
                                     className="cursor-pointer absolute right-0 top-2"
                                   >
-                                    <FaTrash className="text-base text-txtPrimary" />
+                                    <FaTrash className="text-base text-black" />
                                   </motion.div>
                                 )}
                               </AnimatePresence>
@@ -853,7 +978,7 @@ const Template1 = () => {
                                 name="title"
                                 type="text"
                                 readOnly="true"
-                                className={` outline-none border-none font-sans text-lg tracking-wide capitalize text-txtDark w-full ${
+                                className={` outline-none border-none font-sans font-semibold text-lg tracking-wide capitalize text-black w-full ${
                                   isEdit ? "bg-gray-200" : "bg-transparent"
                                 }`}
                               />
@@ -880,9 +1005,22 @@ const Template1 = () => {
                                 rows="3"
                                 style={{
                                   maxHeight: "auto",
-                                  minHeight: "60px",
+                                  minHeight: "50px",
                                   resize: "none",
                                 }}
+                              />
+                            </div>
+
+                            <div className="w-[15%]">
+                              <input
+                                value={exp.year}
+                                onChange={(e) => handleExpChange(i, e)}
+                                name="year"
+                                type="text"
+                                readOnly="true"
+                                className={` outline-none border-none text-[12px] text-base tracking-eide uppercase text-black w-full ${
+                                  isEdit ? "bg-gray-200" : "bg-transparent"
+                                }`}
                               />
                             </div>
                           </motion.div>
@@ -904,9 +1042,14 @@ const Template1 = () => {
 
                 {/* skills */}
                 <div className="w-full">
-                  <p className="uppercase text-xl tracking-wider">Skills</p>
-                  <div className="w-full h-1 bg-txtDark my-3"></div>
-                  <div className="w-full flex flex-wrap items-center justify-start gap-4">
+                  <div className="flex">
+                    <img src={chartIcon} alt="" />
+                    <p className="ml-3 text-semibold uppercase text-xl tracking-wider">
+                      Skills
+                    </p>
+                  </div>
+
+                  <div className="w-full mt-3 flex flex-wrap items-center justify-start gap-4">
                     <AnimatePresence>
                       {skills &&
                         skills?.map((skill, i) => (
@@ -961,7 +1104,7 @@ const Template1 = () => {
                             </div>
                             <div className="relative mt-2 w-full h-1 rounded-md bg-gray-400">
                               <div
-                                className="h-full rounded-md bg-gray-600"
+                                className="h-full rounded-md bg-[#F3AA03]"
                                 style={{
                                   width: `${skill.percentage}%`,
                                   transition: "width 0.3s ease",
