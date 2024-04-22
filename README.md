@@ -2,8 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/Tomi441/resume-builder).
 
+first clone repo with git clone with repo url 
+
+
 ## Dependencies that need to be installed are as followed
-yarn
+yarn install
 
 
 ## Available Scripts
